@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시판 홈</title>
+  <link rel="stylesheet" type="text/css" href="/static/styles/commonStyle.css">
+  <link rel="stylesheet" type="text/css" href="/static/styles/index.css">
+</head>
+<body>
+<header>
+  <span th:if="${user.loginState == 1}">
+    <p th:text="${user.nickname}">닉네임 표시</p>
+  </span>
+  <button id="loginButton" class="button">로그인</button>
+</header>
+<section>
+  <table>
+    <thead>
+    <tr>
+      <td>제목</td>
+      <td>작성자</td>
+      <td>조회수</td>
+      <td>작성일</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post: ${posts}">
+      <td><a th:href="@{|/post/${post.id}|}"></a></td>
+      <td th:text="${post.writer}"></td>
+      <td th:text="${post.views}"></td>
+      <td th:text="*{#temporals.format(post.postCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+
+<script type="module" src="/static/js/index.js"></script>
+</body>
+</html>

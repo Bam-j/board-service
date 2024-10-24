@@ -6,7 +6,7 @@ spring:
     name: board-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_cr_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8  #GRANT ALL PRIVILEGES ON db_cr_board.* TO jh@localhost;
+    url: jdbc:mysql://localhost:3306/db_board_service?serverTimezone=Asia/Seoul&characterEncoding=UTF-8  #GRANT ALL PRIVILEGES ON db_board_service* TO jh@localhost;
     username: jh
     password: 1234
   thymeleaf:
@@ -17,4 +17,4 @@ jpa:
   open-in-view: false
   show-sql: true
   hibernate:
-    ddl-auto: update
+    ddl-auto: create
