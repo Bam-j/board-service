@@ -1,10 +1,20 @@
 # 회원제 게시판 서비스 연습 구현
 ## 프로젝트 개요
-- 회원제로 운영하는 회원 게시판
-- 간단한 CRUD 게시판
+- 회원제로 운영하는 게시판 서비스
+- 게시글 - 댓글 서비스
+
+## 
+
+<hr>
 
 ## 사용 기술
-Spring Boot, Thymeleaf, Spring Data JPA, MySQL, BootStrap
+- **Thymeleaf, BootStrap**: 프론트 구현 & 디자인
+- **MySQL**: user, post, commnet 세 가지 데이터를 저장할 DB
+- **Java 17, SpringBoot, Spring Data JPA**: 백엔드 구현
+- **Gradle**: 프로젝트 빌드
+- **Git, GitHub**: 프로젝트 버전 관리
+
+<hr>
 
 ## 기능
 ### 회원 시스템
@@ -30,5 +40,13 @@ Spring Boot, Thymeleaf, Spring Data JPA, MySQL, BootStrap
 - 자신이 작성한 게시글 리스트 출력
 - 회원 탈퇴 버튼 (2중 확인)
 
+<hr>
+
+## DB
+![board-service](https://github.com/user-attachments/assets/7112429b-e153-4ad9-8db0-ad84ec45508c)
+
+<hr>
+
 ## 추가 구현 예정 기능
 - Spring Security, OAuth2 학습 후 도입
+- 게시글 이미지 첨부 기능
