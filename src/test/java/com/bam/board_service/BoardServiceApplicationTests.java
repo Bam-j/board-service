@@ -9,5 +9,4 @@ class BoardServiceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

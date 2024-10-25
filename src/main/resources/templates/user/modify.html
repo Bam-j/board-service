@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원정보 수정</title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+<header>
+  <p th:text="${user.nickname}">닉네임 표시</p>
+</header>
+<nav>
+  <a href="/user/posts">작성글 목록</a>
+</nav>
+<section>
+  <h3>회원정보 수정</h3>
+  <form action="/user/modify" method="post">
+    <label>닉네임</label>
+    <input type="text" th:text="${user.nickname}">
+    <button type="submit">변경</button> <br>
+    <!-- TODO: 개발 완료/배포 직전에 type="password"로 변경하기-->
+    <label>비밀번호 </label>
+    <input type="text" name="password">
+    <button type="submit">변경</button> <br>
+    <button type="submit">탈퇴</button>
+  </form>
+</section>
+<script src=""></script>
+</body>
+</html>

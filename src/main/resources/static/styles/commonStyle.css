@@ -9,3 +9,7 @@ html, body {
 table {
   border: red 1px solid;
 }
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}

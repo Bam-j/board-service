@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TODO: title 내용을 post.title로 나오게 변경 -->
+  <title>게시글 상세 조회</title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+<header>
+  <span th:if="${user.loginState == 1}">
+    <p th:text="${user.nickname}">닉네임 표시</p>
+  </span>
+  <button id="loginButton" class="button">로그인</button>
+</header>
+<section>
+  <table>
+    <thead>
+    <tr>
+      <td th:text="${post.postTitle}"></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td th:text="${post.postWriter}"></td>
+      <td th:text="${post.postCreatedTime}"></td>
+      <td th:text="${post.postViews}"></td>
+    </tr>
+    <tr>
+      <td th:text="${board.boardContents}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <button>목록</button>
+  <button>수정</button>
+  <button>삭제</button>
+</section>
+<script src=""></script>
+</body>
+</html>
