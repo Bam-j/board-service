@@ -48,5 +48,5 @@ returnType testMethodName() {
 >ex) `/templates/user/loginForm.html`, `/static/style/user/loginFormStyle.css`
 
 ### 요청 주소
-- 요청은 명칭과 접미사를 분리
->ex) boardList -> /board/list
+- 요청은 각 명칭과 접미사 분리
+>ex) `GET /board/postEdit.html` -> `GET /board/post/edit`

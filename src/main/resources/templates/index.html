@@ -32,7 +32,7 @@
       <td><a th:href="@{|/post/${post.id}|}"></a></td>
       <td th:text="${post.writer}"></td>
       <td th:text="${post.views}"></td>
-      <td th:text="*{#temporals.format(post.postCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <td th:text="*{#temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
     </tr>
     </tbody>
   </table>

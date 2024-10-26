@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시글 작성</title>
+  <title>게시글 수정</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -12,12 +12,13 @@
   <p th:text="${user.nickname}">닉네임 표시</p>
 </header>
 <section>
-  <form action="/post/write" method="post" name="postWriteForm">
-    <input type="text" name="boardTitle" placeholder="제목"> <br>
+  <form action="/post/modify" method="post" name="postModifyForm">
+    <input type="text" name="boardTitle" placeholder="제목" th:value="${editedPost.title}"> <br>
     <!-- TinyMCE 초기화 지점 추가 -->
     <!-- TODO: 위지윅 에디터 변경 -->
-    <textarea id="tiny" name="postContents">여기에 내용을 입력해주세요.</textarea>
-    <input type="submit" value="작성">
+    <textarea id="tiny" name="postContents"
+              th:text="${editedPost.contents}">여기에 내용을 입력해주세요.</textarea>
+    <input type="submit" value="수정">
   </form>
 </section>
 <!-- 위지윅 에디터 추가 -->

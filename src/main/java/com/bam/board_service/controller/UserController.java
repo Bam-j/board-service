@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @GetMapping("/join")
     public String joinForm() {
-        return "user/join";
+        return "joinForm";
     }
 }

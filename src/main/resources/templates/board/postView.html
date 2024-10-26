@@ -18,17 +18,17 @@
   <table>
     <thead>
     <tr>
-      <td th:text="${post.postTitle}"></td>
+      <td th:text="${post.title}"></td>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td th:text="${post.postWriter}"></td>
-      <td th:text="${post.postCreatedTime}"></td>
-      <td th:text="${post.postViews}"></td>
+      <td th:text="${post.writer}"></td>
+      <td th:text="${post.createdTime}"></td>
+      <td th:text="${post.views}"></td>
     </tr>
     <tr>
-      <td th:text="${board.boardContents}"></td>
+      <td th:text="${post.contents}"></td>
     </tr>
     </tbody>
   </table>
