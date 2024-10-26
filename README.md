@@ -43,7 +43,7 @@
 <hr>
 
 ## DB
-![board-service](https://github.com/user-attachments/assets/fb5524db-bfd7-4e5a-9c70-9015004bd75e)
+![board-service](https://github.com/user-attachments/assets/ec46afe5-8120-4038-b076-8d29829d2b97)
 
 <hr>
 
