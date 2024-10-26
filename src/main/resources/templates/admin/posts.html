@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,34 @@
   <link rel="stylesheet" href="">
 </head>
 <body>
-
+<header>
+  <p th:text="${user.nickname}">닉네임 표시</p>
+</header>
+<nav>
+  <a href="/admin/users">회원 관리</a>
+</nav>
+<section>
+  <table>
+    <thead>
+    <tr>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>조회수</th>
+      <th>작성일</th>
+      <th>게시글 삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post: ${posts}">
+      <td><a th:href="@{|/post/${post.id}|}"></a></td>
+      <td th:text="${post.writer}"></td>
+      <td th:text="${post.views}"></td>
+      <td th:text="*{#temporals.format(post.postCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <a th:href="@{|/post/delete/${post.id}|}">삭제</a>
+    </tr>
+    </tbody>
+  </table>
+</section>
 <script src=""></script>
 </body>
 </html>
