@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * 메인 페이지인 index.html에 대한 컨트롤러를 정의하는 컨트롤러
+ *
+ * @author bam
+ * @version 1.0
  */
 @Controller
 public class HomeController {
