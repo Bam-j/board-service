@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -36,17 +37,34 @@ public class UserEntity {
     private String password;
 
     /**
-     * 일반 사용자와 관리자 계정을 구분하는 필드.
-     * 0: 일반 사용자 계정, 1: 관리자 계정
+     * 일반 사용자와 관리자 계정을 구분하는 필드. 0: 일반 사용자 계정, 1: 관리자 계정
      */
     @Column(nullable = false)
     private Long userType;
 
 
     /**
-     * 로그인 상태를 나타내기 위한 필드.
-     * 0: 로그인 중이 아님, 1: 로그인 중
+     * 로그인 상태를 나타내기 위한 필드. 0: 로그인 중이 아님, 1: 로그인 중
      */
     @Column(nullable = false)
     private Long loginState;
+
+    /**
+     * 빌더 패턴이 적용된 생성자
+     *
+     * @param username
+     * @param nickname
+     * @param password
+     * @param userType
+     * @param loginState
+     */
+    @Builder
+    public UserEntity(String username, String nickname, String password, Long userType,
+        Long loginState) {
+        this.username = username;
+        this.nickname = nickname;
+        this.password = password;
+        this.userType = userType;
+        this.loginState = loginState;
+    }
 }
