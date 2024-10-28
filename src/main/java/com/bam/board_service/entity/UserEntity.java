@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
+import org.hibernate.annotations.ColumnDefault;
 
 /**
  * 유저 정보들을 담은 DB의 users_table에 접근하기 위한 엔티티 클래스
@@ -45,34 +45,30 @@ public class UserEntity {
      * 일반 사용자와 관리자 계정을 구분하는 필드. 0: 일반 사용자 계정, 1: 관리자 계정
      */
     @Column(nullable = false)
-    private Long userType;
+    //columnDefinition
+    //@Builder.default
+    //@ColumnDefault("0L")
+    private Long userType = 0L;
 
 
     /**
      * 로그인 상태를 나타내기 위한 필드. 0: 로그인 중이 아님, 1: 로그인 중
      */
     @Column(nullable = false)
-    private Long loginState;
+    private Long loginState = 0L;
 
     /**
      * 빌더 패턴이 적용된 생성자
      *
-     * @param id
      * @param username
      * @param nickname
      * @param password
-     * @param userType
-     * @param loginState
      */
     @Builder
-    public UserEntity(UUID id, String username, String nickname, String password, Long userType,
-        Long loginState) {
-        this.id = id;
+    public UserEntity(String username, String nickname, String password) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-        this.userType = userType;
-        this.loginState = loginState;
     }
 
     /**
@@ -83,12 +79,9 @@ public class UserEntity {
      */
     public static UserEntity toUserEntity(UserDTO userDTO) {
         UserEntity userEntity = UserEntity.builder()
-            .id(userDTO.getId())
             .username(userDTO.getUsername())
             .nickname(userDTO.getNickname())
             .password(userDTO.getPassword())
-            .userType(userDTO.getUserType())
-            .loginState(userDTO.getLoginState())
             .build();
 
         return userEntity;

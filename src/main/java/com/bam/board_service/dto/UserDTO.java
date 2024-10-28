@@ -14,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class UserDTO {
 
     private UUID id;
@@ -31,5 +30,4 @@ public class UserDTO {
      * 0: 로그인 중이 아님, 1: 로그인 중
      */
     private Long loginState;
-
 }

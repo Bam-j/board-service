@@ -1,8 +1,14 @@
 package com.bam.board_service.controller;
 
+import com.bam.board_service.dto.UserDTO;
+import com.bam.board_service.repository.UserRepository;
+import com.bam.board_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,16 +18,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/user")
+//@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     /**
      * 회원가입 폼을 요청하는 메소드
      * @return joinForm.html을 반환
      */
-    @GetMapping("/join")
+    @GetMapping("/user/join")
     public String joinForm() {
-        return "joinForm";
+        return "/user/joinForm";
+    }
+
+    /**
+     * joinForm에서 POST 요청이 발생하면 폼 입력 데이터 userDTO로 받아 DB에 저장 후 홈으로 이동
+     *
+     * @param userDTO
+     * @return index.html
+     */
+    @PostMapping("/user/join")
+    public String join(@ModelAttribute UserDTO userDTO) {
+        userService.save(userDTO);
+
+        return "index";
+    }
+
+    @GetMapping("/user/login")
+    public String loginForm() {
+        return "/user/loginForm";
     }
 }
