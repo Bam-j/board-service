@@ -1,8 +1,7 @@
-package com.bam.board_service.user.service;
+package com.bam.board_service.user;
 
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

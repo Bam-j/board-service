@@ -1,5 +1,6 @@
 package com.bam.board_service.entity;
 
+import com.bam.board_service.dto.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,8 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 
 /**
  * 유저 정보들을 담은 DB의 users_table에 접근하기 위한 엔티티 클래스
@@ -18,6 +22,7 @@ import lombok.Getter;
  */
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users_table")
 public class UserEntity {
 
@@ -52,6 +57,7 @@ public class UserEntity {
     /**
      * 빌더 패턴이 적용된 생성자
      *
+     * @param id
      * @param username
      * @param nickname
      * @param password
@@ -59,12 +65,32 @@ public class UserEntity {
      * @param loginState
      */
     @Builder
-    public UserEntity(String username, String nickname, String password, Long userType,
+    public UserEntity(UUID id, String username, String nickname, String password, Long userType,
         Long loginState) {
+        this.id = id;
         this.username = username;
         this.nickname = nickname;
         this.password = password;
         this.userType = userType;
         this.loginState = loginState;
+    }
+
+    /**
+     * UserDTO 객체를 받아 UserEntity로 변경하는 메소드
+     *
+     * @param userDTO
+     * @return userEntity
+     */
+    public static UserEntity toUserEntity(UserDTO userDTO) {
+        UserEntity userEntity = UserEntity.builder()
+            .id(userDTO.getId())
+            .username(userDTO.getUsername())
+            .nickname(userDTO.getNickname())
+            .password(userDTO.getPassword())
+            .userType(userDTO.getUserType())
+            .loginState(userDTO.getLoginState())
+            .build();
+
+        return userEntity;
     }
 }
