@@ -1,7 +1,9 @@
 package com.bam.board_service.user;
 
+import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
+import com.bam.board_service.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,15 +17,20 @@ class UserEntityTest {
     @DisplayName("UserDTO -> UserEntity 변환시 데이터가 제대로 넘어갔는지 확인")
     void userDTOtoUserEntityTest() {
         //given
-        UserDTO userDTO = new UserDTO();
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+            .username("test")
+            .nickname("test")
+            .password("1234")
+            .build();
+        UserMapper userMapper = new UserMapper();
 
         //when
-        UserEntity userEntity = UserEntity.toUserEntity(userDTO);
+        UserEntity userEntity = userMapper.toUserEntity(userCreateDTO);
 
         //then
         //각 필드의 값 뿐만 아니라 타입까지 제대로 넘어가야 테스트 성공
-        assertEquals(userDTO.getUsername(), userEntity.getUsername());
-        assertEquals(userDTO.getNickname(), userEntity.getNickname());
-        assertEquals(userDTO.getPassword(), userEntity.getPassword());
+        assertEquals(userCreateDTO.getUsername(), userEntity.getUsername());
+        assertEquals(userCreateDTO.getNickname(), userEntity.getNickname());
+        assertEquals(userCreateDTO.getPassword(), userEntity.getPassword());
     }
 }

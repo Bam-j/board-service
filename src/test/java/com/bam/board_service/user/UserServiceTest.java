@@ -1,5 +1,6 @@
 package com.bam.board_service.user;
 
+import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
@@ -26,11 +27,15 @@ class UserServiceTest {
     @DisplayName("생성된 데이터가 DB에 제대로 save가 되는지 테스트")
     void userSaveTest() {
         //given
-        UserDTO userDTO = new UserDTO("tester1", "tester1", "1234");
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+            .username("test")
+            .nickname("test")
+            .password("1234")
+            .build();
         UserMapper userMapper = new UserMapper();
 
         //when
-        UserEntity userEntity = userMapper.userDTOToUserEntity(userDTO);
+        UserEntity userEntity = userMapper.toUserEntity(userCreateDTO);
         userRepository.save(userEntity);
 
         //then

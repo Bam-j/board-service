@@ -56,33 +56,12 @@ public class UserEntity {
     @Column(nullable = false)
     private Long loginState = 0L;
 
-    /**
-     * 빌더 패턴이 적용된 생성자
-     *
-     * @param username
-     * @param nickname
-     * @param password
-     */
     @Builder
-    public UserEntity(String username, String nickname, String password) {
+    public UserEntity(String username, String nickname, String password, Long userType, Long loginState) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-    }
-
-    /**
-     * UserDTO 객체를 받아 UserEntity로 변경하는 메소드
-     *
-     * @param userDTO
-     * @return userEntity
-     */
-    public static UserEntity toUserEntity(UserDTO userDTO) {
-        UserEntity userEntity = UserEntity.builder()
-            .username(userDTO.getUsername())
-            .nickname(userDTO.getNickname())
-            .password(userDTO.getPassword())
-            .build();
-
-        return userEntity;
+        this.userType = userType;
+        this.loginState = loginState;
     }
 }

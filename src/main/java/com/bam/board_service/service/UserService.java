@@ -1,7 +1,9 @@
 package com.bam.board_service.service;
 
+import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
+import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,11 @@ public class UserService {
      * View에서 DTO로 정보를 받아 Entity로 변환 후 JPA의 save()를 호출해서 유저 정보를 DB에 저장한다.
      * </p>
      *
-     * @param userDTO
+     * @param userCreateDTO
      */
-    public void save(UserDTO userDTO) {
-        UserEntity userEntity = UserEntity.toUserEntity(userDTO);
+    public void save(UserCreateDTO userCreateDTO) {
+        UserMapper userMapper = new UserMapper();
+        UserEntity userEntity = userMapper.toUserEntity(userCreateDTO);
         userRepository.save(userEntity);
     }
 
