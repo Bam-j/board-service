@@ -12,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 /**
  * 유저 정보들을 담은 DB의 users_table에 접근하기 위한 엔티티 클래스

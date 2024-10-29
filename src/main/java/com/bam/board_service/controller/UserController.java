@@ -3,13 +3,12 @@ package com.bam.board_service.controller;
 import com.bam.board_service.dto.UserDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 회원(user)에 관련된 요청들을 처리하는 컨트롤러
@@ -49,5 +48,17 @@ public class UserController {
     @GetMapping("/user/login")
     public String loginForm() {
         return "/user/loginForm";
+    }
+
+    @PostMapping("/user/login")
+    public String login(@ModelAttribute UserDTO userDTO, HttpSession httpSession) {
+        UserDTO loginUserDTO = userService.login(userDTO);
+
+        if (loginUserDTO != null) {
+            return "redirect:index";
+        }
+        else {
+            return "/user/loginForm";
+        }
     }
 }

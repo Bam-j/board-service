@@ -40,11 +40,8 @@ public class UserDTO {
      */
     @Builder
     public UserDTO(String username, String nickname, String password) {
-        this.id = UUID.randomUUID();
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-        this.userType = 0L;
-        this.loginState = 0L;
     }
 }

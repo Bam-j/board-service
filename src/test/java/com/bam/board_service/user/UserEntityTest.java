@@ -2,6 +2,7 @@ package com.bam.board_service.user;
 
 import com.bam.board_service.dto.UserDTO;
 import com.bam.board_service.entity.UserEntity;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ class UserEntityTest {
     @DisplayName("UserDTO -> UserEntity 변환시 데이터가 제대로 넘어갔는지 확인")
     void userDTOtoUserEntityTest() {
         //given
-        UserDTO userDTO = new UserDTO("tester1", "tester1", "1234");
+        UserDTO userDTO = new UserDTO();
 
         //when
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
