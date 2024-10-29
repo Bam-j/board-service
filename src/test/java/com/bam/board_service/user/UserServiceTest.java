@@ -2,6 +2,7 @@ package com.bam.board_service.user;
 
 import com.bam.board_service.dto.UserDTO;
 import com.bam.board_service.entity.UserEntity;
+import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import java.util.Optional;
@@ -26,10 +27,11 @@ class UserServiceTest {
     @DisplayName("생성된 데이터가 DB에 제대로 save가 되는지 테스트")
     void userSaveTest() {
         //given
-        UserDTO userDTO = new UserDTO(UUID.randomUUID(), "tester1", "tester1", "1234", 0L, 0L);
+        UserDTO userDTO = new UserDTO("tester1", "tester1", "1234");
+        UserMapper userMapper = new UserMapper();
 
         //when
-        UserEntity userEntity = UserEntity.toUserEntity(userDTO);
+        UserEntity userEntity = userMapper.userDTOToUserEntity(userDTO);
         userRepository.save(userEntity);
 
         //then

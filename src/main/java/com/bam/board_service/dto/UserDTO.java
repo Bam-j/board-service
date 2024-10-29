@@ -2,6 +2,7 @@ package com.bam.board_service.dto;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +31,17 @@ public class UserDTO {
      * 0: 로그인 중이 아님, 1: 로그인 중
      */
     private Long loginState;
+
+    /**
+     * 빌더 패턴이 적용된 생성자
+     * @param username
+     * @param nickname
+     * @param password
+     */
+    @Builder
+    public UserDTO(String username, String nickname, String password) {
+        this.username = username;
+        this.nickname = nickname;
+        this.password = password;
+    }
 }
