@@ -1,6 +1,6 @@
 package com.bam.board_service.user;
 
-import com.bam.board_service.dto.UserDTO;
+import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.bam.board_service.entity;
 
-import com.bam.board_service.dto.UserDTO;
+import com.bam.board_service.dto.user.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

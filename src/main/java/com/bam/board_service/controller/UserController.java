@@ -1,6 +1,6 @@
 package com.bam.board_service.controller;
 
-import com.bam.board_service.dto.UserDTO;
+import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import jakarta.servlet.http.HttpSession;

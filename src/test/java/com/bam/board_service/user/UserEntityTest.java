@@ -1,8 +1,7 @@
 package com.bam.board_service.user;
 
-import com.bam.board_service.dto.UserDTO;
+import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

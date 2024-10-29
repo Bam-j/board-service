@@ -1,7 +1,6 @@
-package com.bam.board_service.dto;
+package com.bam.board_service.dto.user;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
