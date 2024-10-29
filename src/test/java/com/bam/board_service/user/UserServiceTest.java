@@ -5,7 +5,6 @@ import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ class UserServiceTest {
     @DisplayName("생성된 데이터가 DB에 제대로 save가 되는지 테스트")
     void userSaveTest() {
         //given
-        UserDTO userDTO = new UserDTO(UUID.randomUUID(), "tester1", "tester1", "1234", 0L, 0L);
+        UserDTO userDTO = new UserDTO("tester1", "tester1", "1234");
 
         //when
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
