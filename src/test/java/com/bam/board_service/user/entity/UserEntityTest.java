@@ -1,7 +1,6 @@
-package com.bam.board_service.user;
+package com.bam.board_service.user.entity;
 
 import com.bam.board_service.dto.user.UserCreateDTO;
-import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,8 @@
-package com.bam.board_service.user;
+package com.bam.board_service.user.service;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.bam.board_service.dto.user.UserCreateDTO;
-import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
@@ -17,15 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserServiceTest {
+class UserLoginServiceTest {
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
 
     @Test
-    @DisplayName("생성된 데이터가 DB에 제대로 save가 되는지 테스트")
-    void userSaveTest() {
+    @DisplayName("findByUsername 동작 테스트 - DB에 일치하는 username이 없는 경우")
+    void findByUsernameFailureTest() {
         //given
         UserCreateDTO userCreateDTO = UserCreateDTO.builder()
             .username("test")
@@ -33,14 +35,12 @@ class UserServiceTest {
             .password("1234")
             .build();
         UserMapper userMapper = new UserMapper();
+        userRepository.save(userMapper.toUserEntity(userCreateDTO));
 
         //when
-        UserEntity userEntity = userMapper.toUserEntity(userCreateDTO);
-        userRepository.save(userEntity);
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername("whoami");
 
         //then
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(userEntity.getId());
-
-        optionalUserEntity.ifPresent(entity -> assertEquals(userEntity, entity));
+        assertFalse(optionalUserEntity.isPresent(), "'whoami'라는 유저가 존재하여 조회했습니다.");
     }
 }
