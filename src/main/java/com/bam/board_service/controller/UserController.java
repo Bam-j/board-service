@@ -1,5 +1,6 @@
 package com.bam.board_service.controller;
 
+import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
@@ -35,12 +36,12 @@ public class UserController {
     /**
      * joinForm에서 POST 요청이 발생하면 폼 입력 데이터 userDTO로 받아 DB에 저장 후 홈으로 이동
      *
-     * @param userDTO
+     * @param userCreateDTO
      * @return index.html
      */
     @PostMapping("/user/join")
-    public String join(@ModelAttribute UserDTO userDTO) {
-        userService.save(userDTO);
+    public String join(@ModelAttribute UserCreateDTO userCreateDTO) {
+        userService.save(userCreateDTO);
 
         return "index";
     }

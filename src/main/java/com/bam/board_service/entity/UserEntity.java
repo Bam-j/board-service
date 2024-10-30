@@ -49,7 +49,6 @@ public class UserEntity {
     //@ColumnDefault("0L")
     private Long userType = 0L;
 
-
     /**
      * 로그인 상태를 나타내기 위한 필드. 0: 로그인 중이 아님, 1: 로그인 중
      */
