@@ -3,12 +3,14 @@ package com.bam.board_service.controller;
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserLoginDTO;
+import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -75,5 +77,17 @@ public class UserController {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
             return "/user/loginForm";
         }
+    }
+
+    @GetMapping("/user/modify/{username}")
+    public String userInfoModifyForm(@PathVariable String username) {
+        return "/user/modifyForm";
+    }
+
+    @PostMapping("/user/modify/{username}")
+    public String userInfoModify(@PathVariable String username, UserUpdateDTO userUpdateDTO) {
+        //UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
+
+        return null;
     }
 }
