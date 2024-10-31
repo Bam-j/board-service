@@ -34,11 +34,22 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
+    /**
+     * 로그인 기능을 수행하는 메소드
+     * <p>
+     *     폼에 입력한 username와 DB의 username 컬럼을 탐색한다.
+     *     useraname과 passoword를 비교하여, 둘 다 일치하는 경우에만 홈페이지 활동에 사용되는
+     *     UserActiveDTO를 반환한다. 그렇지 않은경우 null을 반환
+     * </p>
+     * @param userLoginDTO
+     * @return null or UserActiveDTO
+     */
     public UserActiveDTO login(UserLoginDTO userLoginDTO) {
         Optional<UserEntity> findByUsername = userRepository.findByUsername(
             userLoginDTO.getUsername());
 
         if (findByUsername.isEmpty()) {
+            //입력한 username이 DB에 없어서 조회결과가 empty(null)인 경우
             return null;
         }
 
@@ -53,6 +64,7 @@ public class UserService {
 
             return userActiveDTO;
         } else {
+            //password가 일치하지 않는 경우
             return null;
         }
     }

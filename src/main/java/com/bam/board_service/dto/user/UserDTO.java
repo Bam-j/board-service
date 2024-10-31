@@ -10,7 +10,9 @@ import lombok.Setter;
  * 계층간 유저 데이터를 교환하기 위한 객체
  * @author bam
  * @version 1.0
+ * @deprecated 상황에 따른 DTO들로 분할되어 더 이상 모든 정보를 갖는 DTO는 사용하지 않음.
  */
+@Deprecated
 @Getter
 @Setter
 @NoArgsConstructor

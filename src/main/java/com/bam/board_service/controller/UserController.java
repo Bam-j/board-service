@@ -2,11 +2,9 @@ package com.bam.board_service.controller;
 
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
-import com.bam.board_service.dto.user.UserDTO;
 import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,11 +46,24 @@ public class UserController {
         return "index";
     }
 
+    /**
+     * 로그인 폼을 요청하는 메소드
+     * @return loginForm.html
+     */
     @GetMapping("/user/login")
     public String loginForm() {
         return "/user/loginForm";
     }
 
+    /**
+     * loginForm에서 POST 요청이 발생하면 폼 입력 데이터를 받아와 로그인 작업을 수행하는 메소드
+     * <p>
+     *     로그인에 성공하면 index로 리다이렉트하고,
+     *     로그인에 실패하면 로그인 폼의 데이터를 지운다. (refresh)
+     * </p>
+     * @param userLoginDTO
+     * @return index.html or loginForm.html
+     */
     @PostMapping("/user/login")
     public String login(@ModelAttribute UserLoginDTO userLoginDTO) {
         UserActiveDTO loginUser = userService.login(userLoginDTO);
@@ -61,6 +72,7 @@ public class UserController {
             return "redirect:index";
         }
         else {
+            //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
             return "/user/loginForm";
         }
     }
