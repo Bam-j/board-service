@@ -79,13 +79,13 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/modify/{username}")
-    public String userInfoModifyForm(@PathVariable String username) {
-        return "/user/modifyForm";
+    @GetMapping("/user/update/{username}")
+    public String updateForm(@PathVariable String username) {
+        return "/user/updateForm";
     }
 
-    @PostMapping("/user/modify/{username}")
-    public String userInfoModify(@PathVariable String username, UserUpdateDTO userUpdateDTO) {
+    @PostMapping("/user/update/{username}")
+    public String update(@PathVariable String username, UserUpdateDTO userUpdateDTO) {
         //UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
 
         return null;

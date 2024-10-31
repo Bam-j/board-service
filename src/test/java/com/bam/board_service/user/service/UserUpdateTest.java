@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class UserInfoModifyTest {
+class UserUpdateTest {
 
     @Autowired
     UserRepository userRepository;
