@@ -95,8 +95,33 @@ class UserLoginServiceTest {
     }
 
     @Test
-    @DisplayName("UserService.login() 테스트")
-    void UserServiceLoginMethodTest() {
+    @DisplayName("UserService.login() 실패 테스트")
+    void UserServiceLoginMethodFailureTest() {
+        //given
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+            .username("test")
+            .nickname("test")
+            .password("1234")
+            .build();
+        userService.save(userCreateDTO);
+
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("tt")
+            //.username("test)
+            .password("1234")
+            //.password("0000")
+            .build();
+
+        //when
+        UserActiveDTO userActiveDTO = userService.login(userLoginDTO);
+
+        //then
+        assertNull(userActiveDTO, "비밀번호가 틀린 경우 userActiveDTO는 NULL이어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("UserService.login() 성공 테스트")
+    void UserServiceLoginMethodSuccessTest() {
         //given
         UserCreateDTO userCreateDTO = UserCreateDTO.builder()
             .username("test")
@@ -111,7 +136,7 @@ class UserLoginServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.login(UserLoginDTO);
+        UserActiveDTO userActiveDTO = userService.login(userLoginDTO);
 
         //then
         UserEntity savedUser = userRepository.findByUsername("test").get();

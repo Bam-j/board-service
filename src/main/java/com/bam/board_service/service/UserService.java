@@ -1,10 +1,12 @@
 package com.bam.board_service.service;
 
+import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
-import com.bam.board_service.dto.user.UserDTO;
+import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,9 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public UserDTO login(UserDTO userDTO) {
-        Optional<UserEntity> findByUsername = userRepository.findByUsername(userDTO.getUsername());
+    public UserActiveDTO login(UserLoginDTO userLoginDTO) {
+        Optional<UserEntity> findByUsername = userRepository.findByUsername(
+            userLoginDTO.getUsername());
 
         if (findByUsername.isEmpty()) {
             return null;
@@ -41,10 +44,14 @@ public class UserService {
 
         UserEntity userEntity = findByUsername.get();
 
-        if (userEntity.getPassword().equals(userDTO.getPassword())) {
-            //UserDTO dto = UserDTO.toUserDTO(userEntity);
+        if (Objects.equals(userEntity.getPassword(), userLoginDTO.getPassword())) {
+            //password가 일치하는 경우
+            UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .nickname(userEntity.getNickname())
+                .loginState(1L)
+                .build();
 
-            return null;
+            return userActiveDTO;
         } else {
             return null;
         }

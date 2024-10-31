@@ -1,7 +1,9 @@
 package com.bam.board_service.controller;
 
+import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserDTO;
+import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -52,10 +54,10 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpSession httpSession) {
-        UserDTO loginUserDTO = userService.login(userDTO);
+    public String login(@ModelAttribute UserLoginDTO userLoginDTO) {
+        UserActiveDTO loginUser = userService.login(userLoginDTO);
 
-        if (loginUserDTO != null) {
+        if (loginUser != null) {
             return "redirect:index";
         }
         else {
