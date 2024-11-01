@@ -45,7 +45,7 @@ class UserLoginServiceTest {
             .build();
 
         //when
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername("test");
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(userLoginDTO.getUsername());
 
         UserEntity userEntity = optionalUserEntity.get();
 

@@ -11,12 +11,23 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-    //SELECT * FROM users_table WHERE username=?
-
     /**
      * username을 기반으로 DB 테이블을 탐색하는 메소드
+     * <p>
+     *     SELECT * FROM users_table WHERE username=?
+     * </p>
      * @param username
      * @return Optional<T>
      */
     Optional<UserEntity> findByUsername(String username);
+
+    /**
+     * nickname을 기반으로 DB 테이블을 탐색하는 메소드
+     * <p>
+     *     SELECT * FROM users_table WHERE nickname=?
+     * </p>
+     * @param nickname
+     * @return Optional<T>
+     */
+    Optional<UserEntity> findByNickname(String nickname);
 }

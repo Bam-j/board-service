@@ -86,7 +86,7 @@ public class UserController {
 
     @PostMapping("/user/update/{username}")
     public String update(@PathVariable String username, UserUpdateDTO userUpdateDTO) {
-        //UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
+        UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
 
         return null;
     }
