@@ -3,6 +3,7 @@ package com.bam.board_service.service;
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserLoginDTO;
+import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
@@ -67,5 +68,46 @@ public class UserService {
             //password가 일치하지 않는 경우
             return null;
         }
+    }
+
+    /**
+     * 사용자 정보 수정을 위한 기능을 수행하는 메소드
+     * <p>
+     *     nickname 변경시 findByNickname을 통해 이미 존재하는 nickname인 경우 null을 반환하고,
+     *     존재하지 않는 경우 DB에 저장한 뒤 변경된 내용을 기반으로 UserActiveDTO를 반환한다. <br>
+     *     password 변경시 기존 패스워드와 동일한 값을 입력하면 null을 반환하고,
+     *     기존 패스워드와 다른 경우 DB에 저장한 뒤 변경된 내용을 기반으로 UserActiveDTO를 반환한다.
+     * </p>
+     * @param username
+     * @param userUpdateDTO
+     * @return null or UserActiveDTO
+     */
+    public UserActiveDTO update(String username, UserUpdateDTO userUpdateDTO) {
+        Optional<UserEntity> optionalFindByUsernameUserEntity = userRepository.findByUsername(username);
+        UserEntity originalUserEntity;
+
+        if (optionalFindByUsernameUserEntity.isPresent()) {
+            originalUserEntity = optionalFindByUsernameUserEntity.get();
+        } else {
+            return null;
+        }
+
+        //TODO: 두 개의 케이스 분리
+        if (originalUserEntity.getNickname().equals(userUpdateDTO.getNickname())) {
+            return null;
+        }
+
+        if (originalUserEntity.getPassword().equals(userUpdateDTO.getPassword())) {
+            return null;
+        }
+
+        UserMapper userMapper = new UserMapper();
+        userRepository.save(userMapper.toUserEntity(originalUserEntity, userUpdateDTO));
+        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+            .nickname(userUpdateDTO.getNickname())
+            .loginState(1L)
+            .build();
+
+        return userActiveDTO;
     }
 }

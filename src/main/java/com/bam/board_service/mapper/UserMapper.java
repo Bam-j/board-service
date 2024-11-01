@@ -1,6 +1,7 @@
 package com.bam.board_service.mapper;
 
 import com.bam.board_service.dto.user.UserCreateDTO;
+import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,29 @@ public class UserMapper {
             .password(userCreateDTO.getPassword())
             .userType(0L)
             .loginState(0L)
+            .build();
+
+        return userEntity;
+    }
+
+    /**
+     * 업데이트 폼을 통해 입력받은 userUpdateDTO를 userEntity로 변환
+     * <p>
+     *     변경될 가능성이 있는 정보인 nickname과 password는 userUpdateDTO로 부터 받아오고,
+     *     변경되지 않는 정보는 기존 사용자 정보를 가진 originalUserEntity로부터 받아온다.
+     *     이때 로그인 상태는 1L로 유지해야하므로 직접 값을 준다.
+     * </p>
+     * @param originalUserEntity
+     * @param userUpdateDTO
+     * @return UserEntity
+     */
+    public UserEntity toUserEntity(UserEntity originalUserEntity, UserUpdateDTO userUpdateDTO) {
+        UserEntity userEntity = UserEntity.builder()
+            .username(originalUserEntity.getUsername())
+            .nickname(userUpdateDTO.getNickname())
+            .password(userUpdateDTO.getPassword())
+            .userType(originalUserEntity.getUserType())
+            .loginState(1L)
             .build();
 
         return userEntity;

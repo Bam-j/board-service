@@ -6,6 +6,7 @@ import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,15 +80,17 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/update/{username}")
-    public String updateForm(@PathVariable String username) {
+    @GetMapping("/user/update")
+    public String updateForm() {
         return "/user/updateForm";
     }
 
-    @PostMapping("/user/update/{username}")
-    public String update(@PathVariable String username, UserUpdateDTO userUpdateDTO) {
+    @PostMapping("/user/update")
+    public String update(UserUpdateDTO userUpdateDTO, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+
         UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
 
-        return null;
+        return "redirect:/user/updateForm";
     }
 }
