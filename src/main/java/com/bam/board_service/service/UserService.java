@@ -71,6 +71,14 @@ public class UserService {
         }
     }
 
+    public UserActiveDTO updateNickname(String username, UserUpdateDTO userUpdateDTO) {
+        return null;
+    }
+
+    public UserActiveDTO updatePassword(String username, UserUpdateDTO userUpdateDTO) {
+        return null;
+    }
+
     /**
      * 사용자 정보 수정을 위한 기능을 수행하는 메소드
      * <p>
