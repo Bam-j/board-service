@@ -10,6 +10,7 @@ import com.bam.board_service.repository.UserRepository;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -82,6 +83,7 @@ public class UserService {
      * @param userUpdateDTO
      * @return null or UserActiveDTO
      */
+    /*
     public UserActiveDTO update(String username, UserUpdateDTO userUpdateDTO) {
         Optional<UserEntity> optionalFindByUsernameUserEntity = userRepository.findByUsername(username);
         UserEntity originalUserEntity;
@@ -102,7 +104,9 @@ public class UserService {
         }
 
         UserMapper userMapper = new UserMapper();
-        userRepository.save(userMapper.toUserEntity(originalUserEntity, userUpdateDTO));
+        UserEntity updatedUserEntity = userMapper.toUserEntity(originalUserEntity, userUpdateDTO);
+        userRepository.save(updatedUserEntity);
+
         UserActiveDTO userActiveDTO = UserActiveDTO.builder()
             .nickname(userUpdateDTO.getNickname())
             .loginState(1L)
@@ -110,4 +114,5 @@ public class UserService {
 
         return userActiveDTO;
     }
+     */
 }

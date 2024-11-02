@@ -15,14 +15,18 @@
 </nav>
 <section>
   <h3>회원정보 수정</h3>
-  <form action="/user/update" method="post">
+  <form action="/user/updateNickname" method="post">
     <label>닉네임</label>
     <input type="text" th:text="${user.nickname}" name="nickname">
-    <button type="submit">변경</button> <br>
+    <button type="submit">변경</button>
+  </form>
+  <form action="/user/updatePassword" method="post">
     <!-- TODO: 개발 완료/배포 직전에 type="password"로 변경하기-->
     <label>비밀번호 </label>
     <input type="text" name="password">
-    <button type="submit">변경</button> <br>
+    <button type="submit">변경</button>
+  </form>
+  <form action="/user/delete" method="post">
     <button type="submit">탈퇴</button>
   </form>
 </section>

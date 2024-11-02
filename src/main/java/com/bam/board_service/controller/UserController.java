@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 //@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserRepository userRepository;
     private final UserService userService;
 
     /**
      * 회원가입 폼을 요청하는 메소드
+     *
      * @return joinForm.html을 반환
      */
     @GetMapping("/user/join")
@@ -51,6 +53,7 @@ public class UserController {
 
     /**
      * 로그인 폼을 요청하는 메소드
+     *
      * @return loginForm.html
      */
     @GetMapping("/user/login")
@@ -61,9 +64,9 @@ public class UserController {
     /**
      * loginForm에서 POST 요청이 발생하면 폼 입력 데이터를 받아와 로그인 작업을 수행하는 메소드
      * <p>
-     *     로그인에 성공하면 index로 리다이렉트하고,
-     *     로그인에 실패하면 로그인 폼의 데이터를 지운다. (refresh)
+     * 로그인에 성공하면 index로 리다이렉트하고, 로그인에 실패하면 로그인 폼의 데이터를 지운다. (refresh)
      * </p>
+     *
      * @param userLoginDTO
      * @return index.html or loginForm.html
      */
@@ -73,8 +76,7 @@ public class UserController {
 
         if (loginUser != null) {
             return "redirect:index";
-        }
-        else {
+        } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
             return "/user/loginForm";
         }
@@ -85,11 +87,20 @@ public class UserController {
         return "/user/updateForm";
     }
 
-    @PostMapping("/user/update")
-    public String update(UserUpdateDTO userUpdateDTO, HttpSession session) {
+    @PostMapping("/user/updateNickname")
+    public String updateNickname(UserUpdateDTO userUpdateDTO, HttpSession session) {
         String username = (String) session.getAttribute("username");
 
-        UserActiveDTO updatedUserDTO = userService.update(username, userUpdateDTO);
+        UserActiveDTO updatedUserDTO = userService.updateNickname(username, userUpdateDTO);
+
+        return "redirect:/user/updateForm";
+    }
+
+    @PostMapping("/user/updatePassword")
+    public String updatePassword(UserUpdateDTO userUpdateDTO, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+
+        UserActiveDTO updatedUserDTO = userService.updatePassword(username, userUpdateDTO);
 
         return "redirect:/user/updateForm";
     }
