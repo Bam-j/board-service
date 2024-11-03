@@ -159,7 +159,7 @@ class UserUpdateServiceTest {
         //given
         //기존 유저 정보 username: "test", nickname: "test", password: "1234"
         UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-            .nickname("hello")
+            .nickname("test")
             .password("7777")
             .build();
 

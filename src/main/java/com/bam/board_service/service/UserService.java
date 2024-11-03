@@ -71,56 +71,71 @@ public class UserService {
         }
     }
 
-    public UserActiveDTO updateNickname(String username, UserUpdateDTO userUpdateDTO) {
-        return null;
-    }
-
-    public UserActiveDTO updatePassword(String username, UserUpdateDTO userUpdateDTO) {
-        return null;
-    }
-
     /**
-     * 사용자 정보 수정을 위한 기능을 수행하는 메소드
+     * 사용자 nickname 변경 요청이 들어오면 처리하는 메소드
      * <p>
-     *     nickname 변경시 findByNickname을 통해 이미 존재하는 nickname인 경우 null을 반환하고,
-     *     존재하지 않는 경우 DB에 저장한 뒤 변경된 내용을 기반으로 UserActiveDTO를 반환한다. <br>
-     *     password 변경시 기존 패스워드와 동일한 값을 입력하면 null을 반환하고,
-     *     기존 패스워드와 다른 경우 DB에 저장한 뒤 변경된 내용을 기반으로 UserActiveDTO를 반환한다.
+     *     DB에 이미 존재하거나, 기존 nickname과 동일한 변경을 요청하는 경우 null 반환
+     *     변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
      * </p>
      * @param username
      * @param userUpdateDTO
      * @return null or UserActiveDTO
      */
-    /*
-    public UserActiveDTO update(String username, UserUpdateDTO userUpdateDTO) {
-        Optional<UserEntity> optionalFindByUsernameUserEntity = userRepository.findByUsername(username);
-        UserEntity originalUserEntity;
+    public UserActiveDTO updateNickname(String username, UserUpdateDTO userUpdateDTO) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
 
-        if (optionalFindByUsernameUserEntity.isPresent()) {
-            originalUserEntity = optionalFindByUsernameUserEntity.get();
+        if (optionalUserEntity.isEmpty()) {
+            return null;
+        }
+
+        UserEntity originalUserEntity = optionalUserEntity.get();
+
+        if (!originalUserEntity.getNickname().equals(userUpdateDTO.getNickname())) {
+            UserMapper userMapper = new UserMapper();
+            UserEntity updatedUserEntity = userMapper.toUserEntity(originalUserEntity, userUpdateDTO);
+            userRepository.save(updatedUserEntity);
+
+            UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .nickname(userUpdateDTO.getNickname())
+                .loginState(1L)
+                .build();
+            return userActiveDTO;
         } else {
             return null;
         }
-
-        //TODO: 두 개의 케이스 분리
-        if (originalUserEntity.getNickname().equals(userUpdateDTO.getNickname())) {
-            return null;
-        }
-
-        if (originalUserEntity.getPassword().equals(userUpdateDTO.getPassword())) {
-            return null;
-        }
-
-        UserMapper userMapper = new UserMapper();
-        UserEntity updatedUserEntity = userMapper.toUserEntity(originalUserEntity, userUpdateDTO);
-        userRepository.save(updatedUserEntity);
-
-        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
-            .nickname(userUpdateDTO.getNickname())
-            .loginState(1L)
-            .build();
-
-        return userActiveDTO;
     }
+
+    /**
+     * 사용자 password 변경 요청이 들어오면 처리하는 메소드
+     * <p>
+     *     기존 password와 동일한 변경을 요청하는 경우 null 반환
+     *     변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
+     * </p>
+     * @param username
+     * @param userUpdateDTO
+     * @return null or UserActiveDTO
      */
+    public UserActiveDTO updatePassword(String username, UserUpdateDTO userUpdateDTO) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
+
+        if (optionalUserEntity.isEmpty()) {
+            return null;
+        }
+
+        UserEntity originalUserEntity = optionalUserEntity.get();
+
+        if (!originalUserEntity.getPassword().equals(userUpdateDTO.getPassword())) {
+            UserMapper userMapper = new UserMapper();
+            UserEntity updatedUserEntity = userMapper.toUserEntity(originalUserEntity, userUpdateDTO);
+            userRepository.save(updatedUserEntity);
+
+            UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .nickname(userUpdateDTO.getNickname())
+                .loginState(1L)
+                .build();
+            return userActiveDTO;
+        } else {
+            return null;
+        }
+    }
 }
