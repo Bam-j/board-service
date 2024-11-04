@@ -65,8 +65,8 @@ class UserDeleteServiceTest {
     *   -> 본인만 삭제가 가능 -> 현재 구현할 것
      */
     @Test
-    @DisplayName("UserService.delete() 실패 테스트")
-    void userServiceDeleteFailureTest() {
+    @DisplayName("UserService.delete() 실패 테스트 - loginState가 0L(offline)인 경우")
+    void userServiceDeleteFailureByLoginStateTest() {
         //given
         UserActiveDTO userActiveDTO = UserActiveDTO.builder()
             .nickname("test")
@@ -79,7 +79,25 @@ class UserDeleteServiceTest {
         * 1. UserActiveDTO.nickname과 지우려는 대상의 nickname이 불일치하는 경우
         * 2. loginState가 0L(로그아웃 상태)인 경우
          */
-        userRepository.delete(userActiveDTO);
+        userService.delete(userActiveDTO);
+        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
+
+        //then
+        //delete에 실패한 경우 조회했을때 결과가 null이면 안된다.
+        assertNotNull(optionalUserEntity);
+    }
+
+    @Test
+    @DisplayName("UserService.delete() 실패 테스트 - 삭제 하려는 username과 삭제 요청하는 username이 불일치")
+    void userServiceDeleteFailureByWrongUsernameTest() {
+        //given
+        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+            .nickname("whoami")
+            .loginState(1L)
+            .build();
+
+        //when
+        userService.delete(userActiveDTO);
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 
         //then
@@ -97,7 +115,7 @@ class UserDeleteServiceTest {
             .build();
 
         //when
-        userRepository.delete(userActiveDTO);
+        userService.delete(userActiveDTO);
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 
         //then
