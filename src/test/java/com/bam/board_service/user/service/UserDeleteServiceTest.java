@@ -38,11 +38,12 @@ class UserDeleteServiceTest {
         userRepository.save(userMapper.toUserEntity(userCreateDTO));
     }
 
+    //request: /user/delete/{user.username}
     @Test
     @DisplayName("삭제 후 다시 조회할 때 결과가 null이어야 한다.")
     void userDeleteServiceTest() {
         //given
-        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userCreateDTO.getNickname());
+        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname("test");
         UserEntity userEntity = null;
 
         //when
@@ -58,11 +59,11 @@ class UserDeleteServiceTest {
     }
 
     /*
-    * user delete의 조건
-    * 1. 관리자가 관리자 페이지에서 유저 삭제 버튼 클릭
-    *   -> 관리자 권한이 있어야 함 -> 추후 관리자 페이지 관련 서비스에서 구현
-    * 2. 사용자 본인이 사용자 정보 수정 페이지에서 탈퇴 버튼 클릭
-    *   -> 본인만 삭제가 가능 -> 현재 구현할 것
+     * user delete의 조건
+     * 1. 관리자가 관리자 페이지에서 유저 삭제 버튼 클릭
+     *   -> 관리자 권한이 있어야 함 -> 추후 관리자 페이지 관련 서비스에서 구현
+     * 2. 사용자 본인이 사용자 정보 수정 페이지에서 탈퇴 버튼 클릭
+     *   -> 본인만 삭제가 가능 -> 현재 구현할 것
      */
     @Test
     @DisplayName("UserService.delete() 실패 테스트 - loginState가 0L(offline)인 경우")
@@ -75,11 +76,13 @@ class UserDeleteServiceTest {
 
         //when
         /*
-        * delete 실패 조건
-        * 1. UserActiveDTO.nickname과 지우려는 대상의 nickname이 불일치하는 경우
-        * 2. loginState가 0L(로그아웃 상태)인 경우
+         * delete 실패 조건
+         * 1. UserActiveDTO.nickname과 지우려는 대상의 nickname이 불일치하는 경우
+         * 2. loginState가 0L(로그아웃 상태)인 경우
          */
-        userService.delete(userActiveDTO);
+        String username = userRepository.findByUsername("test").get().getUsername();
+        userService.delete(username);
+
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 
         //then
@@ -97,7 +100,9 @@ class UserDeleteServiceTest {
             .build();
 
         //when
-        userService.delete(userActiveDTO);
+        String username = userRepository.findByUsername("test").get().getUsername();
+        userService.delete(username);
+
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 
         //then
@@ -115,7 +120,9 @@ class UserDeleteServiceTest {
             .build();
 
         //when
+        String username = userRepository.findByUsername("test").get().getUsername();
         userService.delete(userActiveDTO);
+
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 
         //then

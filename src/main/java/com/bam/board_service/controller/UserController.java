@@ -104,4 +104,13 @@ public class UserController {
 
         return "redirect:/user/updateForm";
     }
+
+    @PostMapping("/user/delete")
+    public String delete(HttpSession session) {
+        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+            .nickname((String) session.getAttribute("nickname"))
+
+            .build();
+        return "redirect:/index";
+    }
 }
