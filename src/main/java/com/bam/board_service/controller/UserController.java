@@ -109,8 +109,8 @@ public class UserController {
 
     @PostMapping("/user/delete/{username}")
     public String delete(@PathVariable String username) {
-        userService.delete(username);
+        String deleteResult = userService.delete(username);
 
-        return "redirect:/index";
+        return deleteResult;
     }
 }

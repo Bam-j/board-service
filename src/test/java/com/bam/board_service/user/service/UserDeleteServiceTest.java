@@ -114,18 +114,22 @@ class UserDeleteServiceTest {
     @DisplayName("UserService.delete() 성공 테스트")
     void userServiceDeleteSuccessTest() {
         //given
-        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
-            .nickname("test")
-            .loginState(1L)
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+            .username("del")
+            .nickname("del")
+            .password("1234")
             .build();
+        UserMapper userMapper = new UserMapper();
+        UserEntity userEntity = userMapper.toUserEntity(userCreateDTO);
+        userRepository.save(userEntity);
 
         //when
-        String username = userRepository.findByUsername("test").get().getUsername();
+        String username = userRepository.findByUsername("del").get().getUsername();
         userService.delete(username);
 
-        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
+        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname("del");
 
         //then
-        assertNull(optionalUserEntity);
+        assertTrue(optionalUserEntity.isEmpty());
     }
 }
