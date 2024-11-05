@@ -138,4 +138,8 @@ public class UserService {
             return null;
         }
     }
+
+    public void delete(String username) {
+
+    }
 }

@@ -52,7 +52,7 @@ class UserDeleteServiceTest {
         }
         userRepository.delete(userEntity);
 
-        Optional<UserEntity> optionalResultAfterDeleteUserEntity = userRepository.findByNickname(userCreateDTO.getNickname());
+        Optional<UserEntity> optionalResultAfterDeleteUserEntity = userRepository.findByNickname("test");
 
         //then
         assertFalse(optionalResultAfterDeleteUserEntity.isPresent());
@@ -121,7 +121,7 @@ class UserDeleteServiceTest {
 
         //when
         String username = userRepository.findByUsername("test").get().getUsername();
-        userService.delete(userActiveDTO);
+        userService.delete(username);
 
         Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(userActiveDTO.getNickname());
 

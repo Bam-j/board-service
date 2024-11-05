@@ -26,7 +26,7 @@
     <input type="text" name="password">
     <button type="submit">변경</button>
   </form>
-  <form action="/user/delete" method="post">
+  <form th:action="${/user/delete/user.username}" method="post">
     <button type="submit">탈퇴</button>
   </form>
 </section>

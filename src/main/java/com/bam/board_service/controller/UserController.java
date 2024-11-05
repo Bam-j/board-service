@@ -9,6 +9,7 @@ import com.bam.board_service.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
 
+    //TODO: 각 요청 컨트롤러에 타임리프 템플릿으로 데이터를 전달하는 코드 작성하기
     /**
      * 회원가입 폼을 요청하는 메소드
      *
@@ -105,12 +107,10 @@ public class UserController {
         return "redirect:/user/updateForm";
     }
 
-    @PostMapping("/user/delete")
-    public String delete(HttpSession session) {
-        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
-            .nickname((String) session.getAttribute("nickname"))
+    @PostMapping("/user/delete/{username}")
+    public String delete(@PathVariable String username) {
+        userService.delete(username);
 
-            .build();
         return "redirect:/index";
     }
 }
