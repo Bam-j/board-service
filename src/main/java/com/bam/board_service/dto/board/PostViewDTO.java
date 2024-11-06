@@ -18,4 +18,5 @@ public class PostViewDTO {
     private String contents;
     private String views;
     private String createdTime;
+    private String updatedTime;
 }
