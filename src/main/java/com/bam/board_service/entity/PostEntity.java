@@ -43,7 +43,7 @@ public class PostEntity {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    @Column(nullable = false, insertable = false)
+    @Column(insertable = false)
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 

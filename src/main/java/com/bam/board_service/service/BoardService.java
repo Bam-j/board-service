@@ -1,6 +1,7 @@
 package com.bam.board_service.service;
 
 import com.bam.board_service.dto.board.PostListDTO;
+import com.bam.board_service.dto.board.PostWriteDTO;
 import com.bam.board_service.entity.PostEntity;
 import com.bam.board_service.mapper.PostMapper;
 import com.bam.board_service.repository.BoardRepository;
@@ -15,6 +16,12 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+
+    public void save(PostWriteDTO postWriteDTO) {
+        PostMapper postMapper = new PostMapper();
+        PostEntity postEntity = postMapper.toPostEntity(postWriteDTO);
+        boardRepository.save(postEntity);
+    }
 
     @Transactional
     public List<PostListDTO> findAllPosts() {
