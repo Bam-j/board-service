@@ -8,6 +8,7 @@ import com.bam.board_service.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class BoardService {
         }
 
         return postListDTOList;
+    }
+
+    @Transactional
+    public void increaseViews(UUID id) {
+        boardRepository.increaseViews(id);
     }
 }
