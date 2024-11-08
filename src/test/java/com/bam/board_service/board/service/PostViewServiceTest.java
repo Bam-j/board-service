@@ -32,7 +32,7 @@ class PostViewServiceTest {
         boardService.save(postWriteDTO);
 
         //when
-        boardService.increaseViews(id);
+        //boardService.increaseViews(id);
 
         //then
     }

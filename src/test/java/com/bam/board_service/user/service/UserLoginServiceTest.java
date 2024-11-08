@@ -9,10 +9,12 @@ import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -142,5 +144,33 @@ class UserLoginServiceTest {
         UserEntity savedUser = userRepository.findByUsername("test").get();
         assertThat(userActiveDTO.getNickname()).isEqualTo("test");
         assertThat(userActiveDTO.getLoginState()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("로그인 후 세션으로 부터 id 취득")
+    void getIdFromSessionWhenUserLoginTest() {
+        //given
+        MockHttpSession session = new MockHttpSession();
+
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+            .username("test")
+            .nickname("test")
+            .password("1234")
+            .build();
+        userService.save(userCreateDTO);
+
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+
+        //when
+        userService.login(userLoginDTO);
+
+        UUID savedUserId = userRepository.findByUsername("test").get().getId();
+        UUID loginUserId = (UUID) session.getAttribute("userId");
+
+        //then
+        assertEquals(savedUserId, loginUserId);
     }
 }
