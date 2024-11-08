@@ -1,5 +1,6 @@
 package com.bam.board_service.dto.user;
 
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class UserActiveDTO {
+    private UUID id;
     private String nickname;
     private Long loginState;
 }

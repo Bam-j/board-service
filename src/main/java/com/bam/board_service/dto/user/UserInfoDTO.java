@@ -19,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class UserInfoDTO {
+    private UUID id;
     private String username;
     private String nickname;
     private String password;
