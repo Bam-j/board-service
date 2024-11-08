@@ -72,8 +72,8 @@ public class UserController {
      * @return index.html or loginForm.html
      */
     @PostMapping("/user/login")
-    public String login(@ModelAttribute UserLoginDTO userLoginDTO) {
-        UserActiveDTO loginUser = userService.login(userLoginDTO);
+    public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session) {
+        UserActiveDTO loginUser = userService.login(userLoginDTO, session);
 
         if (loginUser != null) {
             return "redirect:index";

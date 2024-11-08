@@ -100,6 +100,8 @@ class UserLoginServiceTest {
     @DisplayName("UserService.login() 실패 테스트")
     void UserServiceLoginMethodFailureTest() {
         //given
+        MockHttpSession session = new MockHttpSession();
+
         UserCreateDTO userCreateDTO = UserCreateDTO.builder()
             .username("test")
             .nickname("test")
@@ -115,7 +117,7 @@ class UserLoginServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.login(userLoginDTO);
+        UserActiveDTO userActiveDTO = userService.login(userLoginDTO, session);
 
         //then
         assertNull(userActiveDTO, "비밀번호가 틀린 경우 userActiveDTO는 NULL이어야 합니다.");
@@ -125,6 +127,8 @@ class UserLoginServiceTest {
     @DisplayName("UserService.login() 성공 테스트")
     void UserServiceLoginMethodSuccessTest() {
         //given
+        MockHttpSession session = new MockHttpSession();
+
         UserCreateDTO userCreateDTO = UserCreateDTO.builder()
             .username("test")
             .nickname("test")
@@ -138,7 +142,7 @@ class UserLoginServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.login(userLoginDTO);
+        UserActiveDTO userActiveDTO = userService.login(userLoginDTO, session);
 
         //then
         UserEntity savedUser = userRepository.findByUsername("test").get();
@@ -165,10 +169,10 @@ class UserLoginServiceTest {
             .build();
 
         //when
-        userService.login(userLoginDTO);
+        userService.login(userLoginDTO, session);
 
         UUID savedUserId = userRepository.findByUsername("test").get().getId();
-        UUID loginUserId = (UUID) session.getAttribute("userId");
+        UUID loginUserId = (UUID) session.getAttribute("loginUserId");
 
         //then
         assertEquals(savedUserId, loginUserId);

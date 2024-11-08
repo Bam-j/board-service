@@ -7,6 +7,7 @@ import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class UserService {
      * @param userLoginDTO
      * @return null or UserActiveDTO
      */
-    public UserActiveDTO login(UserLoginDTO userLoginDTO) {
+    public UserActiveDTO login(UserLoginDTO userLoginDTO, HttpSession session) {
         Optional<UserEntity> findByUsername = userRepository.findByUsername(
             userLoginDTO.getUsername());
 
@@ -60,9 +61,12 @@ public class UserService {
         if (Objects.equals(userEntity.getPassword(), userLoginDTO.getPassword())) {
             //password가 일치하는 경우
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .id(userEntity.getId())
                 .nickname(userEntity.getNickname())
                 .loginState(1L)
                 .build();
+
+            session.setAttribute("loginUserId", userEntity.getId());
 
             return userActiveDTO;
         } else {
