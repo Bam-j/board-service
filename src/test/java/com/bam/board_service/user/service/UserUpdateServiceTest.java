@@ -102,92 +102,6 @@ class UserUpdateServiceTest {
         assertNull(userEntity);
     }
 
-    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
-    @Test
-    @DisplayName("UserService.updateNickname() 실패 테스트 - 이미 존재하는 nickname으로의 변경 시도")
-    void userServiceUpdateNicknameMethodFailureTest() {
-        //given
-        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-            .nickname("test")
-            .password("1234")
-            .build();
-
-        //when
-        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
-
-        //then
-        //assertNull(userActiveDTO);
-    }
-
-    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
-    @Test
-    @DisplayName("UserService.updateNickname() 성공 테스트")
-    void userServiceUpdateNicknameMethodSuccessTest() {
-        //given
-        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-            .nickname("hello")
-            .password("1234")
-            .build();
-
-        //when
-        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
-
-        //then
-        /*
-        assertAll(
-            () -> assertThat(userActiveDTO).isNotNull(),
-            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("hello"),
-            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
-        );
-         */
-    }
-
-    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
-    @Test
-    @DisplayName("UserService.updatePassword() 실패 테스트 - 이전에 사용한 비밀번호와 동일한 비밀번호로 변경 시도")
-    void userServiceUpdatePasswordMethodFailureTest() {
-        //given
-        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-            .nickname("test")
-            .password("1234")
-            .build();
-
-        //when
-        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
-
-        //then
-        //assertNull(userActiveDTO);
-    }
-
-    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
-    @Test
-    @DisplayName("UserService.updatePassword() 성공 테스트")
-    void userServiceUpdatePasswordMethodSuccessTest() {
-        //given
-        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-            .nickname("test")
-            .password("7777")
-            .build();
-
-        //when
-        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
-
-        //then
-        /*
-        assertAll(
-            () -> assertThat(userActiveDTO).isNotNull(),
-            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("test"),
-            () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("7777"),
-            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
-        );
-
-         */
-    }
-
     @Test
     @DisplayName("UserEntity 탐색 방식을 findByUsername -> findById로 변경")
     void findUserByFindByIdTest() {
@@ -338,5 +252,96 @@ class UserUpdateServiceTest {
             () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("0000"),
             () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
         );
+    }
+
+    /*
+     * 이하는 Disabled된 테스트 메소드
+     * findByUsername -> findById 변경 이전 테스트 메소드
+     */
+
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
+    @Test
+    @DisplayName("UserService.updateNickname() 실패 테스트 - 이미 존재하는 nickname으로의 변경 시도")
+    void userServiceUpdateNicknameMethodFailureTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .nickname("test")
+            .password("1234")
+            .build();
+
+        //when
+        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
+
+        //then
+        //assertNull(userActiveDTO);
+    }
+
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
+    @Test
+    @DisplayName("UserService.updateNickname() 성공 테스트")
+    void userServiceUpdateNicknameMethodSuccessTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .nickname("hello")
+            .password("1234")
+            .build();
+
+        //when
+        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
+
+        //then
+        /*
+        assertAll(
+            () -> assertThat(userActiveDTO).isNotNull(),
+            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("hello"),
+            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
+        );
+         */
+    }
+
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
+    @Test
+    @DisplayName("UserService.updatePassword() 실패 테스트 - 이전에 사용한 비밀번호와 동일한 비밀번호로 변경 시도")
+    void userServiceUpdatePasswordMethodFailureTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .nickname("test")
+            .password("1234")
+            .build();
+
+        //when
+        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
+
+        //then
+        //assertNull(userActiveDTO);
+    }
+
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
+    @Test
+    @DisplayName("UserService.updatePassword() 성공 테스트")
+    void userServiceUpdatePasswordMethodSuccessTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .nickname("test")
+            .password("7777")
+            .build();
+
+        //when
+        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
+
+        //then
+        /*
+        assertAll(
+            () -> assertThat(userActiveDTO).isNotNull(),
+            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("test"),
+            () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("7777"),
+            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
+        );
+
+         */
     }
 }
