@@ -106,9 +106,9 @@ public class UserController {
         return "redirect:/user/updateForm";
     }
 
-    @PostMapping("/user/delete/{username}")
-    public String delete(@PathVariable String username) {
-        String deleteResult = userService.delete(username);
+    @PostMapping("/user/delete/{id}")
+    public String delete(@PathVariable UUID id) {
+        String deleteResult = userService.delete(id);
 
         return deleteResult;
     }

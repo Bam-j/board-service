@@ -150,16 +150,9 @@ public class UserService {
         }
     }
 
-    public String delete(String username) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
-
-        if (optionalUserEntity.isEmpty()) {
-            return null;
-        }
-
-        UserEntity userEntity = optionalUserEntity.get();
-
-        userRepository.deleteById(userEntity.getId());
+    public String delete(UUID id) {
+        //TODO: id 검증 작업
+        userRepository.deleteById(id);
 
         return "redirect:/index";
     }
