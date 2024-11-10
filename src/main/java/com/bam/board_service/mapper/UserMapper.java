@@ -45,6 +45,7 @@ public class UserMapper {
      */
     public UserEntity toUserEntity(UserEntity originalUserEntity, UserUpdateDTO userUpdateDTO) {
         UserEntity userEntity = UserEntity.builder()
+            .id(originalUserEntity.getId())
             .username(originalUserEntity.getUsername())
             .nickname(userUpdateDTO.getNickname())
             .password(userUpdateDTO.getPassword())

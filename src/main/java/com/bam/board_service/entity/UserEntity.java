@@ -56,7 +56,8 @@ public class UserEntity {
     private Long loginState = 0L;
 
     @Builder
-    public UserEntity(String username, String nickname, String password, Long userType, Long loginState) {
+    public UserEntity(UUID id, String username, String nickname, String password, Long userType, Long loginState) {
+        this.id = id;
         this.username = username;
         this.nickname = nickname;
         this.password = password;

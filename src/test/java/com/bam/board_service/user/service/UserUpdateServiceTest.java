@@ -2,17 +2,20 @@ package com.bam.board_service.user.service;
 
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
+import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -173,5 +176,40 @@ class UserUpdateServiceTest {
             () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("7777"),
             () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
         );
+    }
+
+    @Test
+    @DisplayName("UserEntity 탐색 방식을 findByUsername -> findById로 변경")
+    void findUserByFindByIdTest() {
+        //given
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+        MockHttpSession session = new MockHttpSession();
+        UserActiveDTO userActiveDTO = userService.login(userLoginDTO, session);
+
+        UUID id = (UUID) session.getAttribute("loginUserId");
+
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .id(id)
+            .nickname("test")
+            .password("0000")
+            .build();
+
+        //when
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        UserEntity originalUserEntity = optionalUserEntity.get();
+
+        UserMapper userMapper = new UserMapper();
+        UserEntity updatedUserEntity = userMapper.toUserEntity(originalUserEntity, userUpdateDTO);
+        userRepository.save(updatedUserEntity);
+
+        //then
+        UserEntity updateResultUserEntity = userRepository.findById(id).get();
+
+        assertThat(updateResultUserEntity.getUsername()).isEqualTo("test");
+        assertThat(updateResultUserEntity.getNickname()).isEqualTo("test");
+        assertThat(updateResultUserEntity.getPassword()).isEqualTo("0000");
     }
 }
