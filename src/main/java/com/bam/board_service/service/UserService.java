@@ -10,6 +10,7 @@ import com.bam.board_service.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,12 +82,12 @@ public class UserService {
      * DB에 이미 존재하거나, 기존 nickname과 동일한 변경을 요청하는 경우 null 반환 변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
      * </p>
      *
-     * @param username
+     * @param id
      * @param userUpdateDTO
      * @return null or UserActiveDTO
      */
-    public UserActiveDTO updateNickname(String username, UserUpdateDTO userUpdateDTO) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
+    public UserActiveDTO updateNickname(UUID id, UserUpdateDTO userUpdateDTO) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
 
         if (optionalUserEntity.isEmpty()) {
             return null;
@@ -101,9 +102,11 @@ public class UserService {
             userRepository.save(updatedUserEntity);
 
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .id(originalUserEntity.getId())
                 .nickname(userUpdateDTO.getNickname())
                 .loginState(1L)
                 .build();
+
             return userActiveDTO;
         } else {
             return null;
@@ -116,12 +119,12 @@ public class UserService {
      * 기존 password와 동일한 변경을 요청하는 경우 null 반환 변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
      * </p>
      *
-     * @param username
+     * @param id
      * @param userUpdateDTO
      * @return null or UserActiveDTO
      */
-    public UserActiveDTO updatePassword(String username, UserUpdateDTO userUpdateDTO) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
+    public UserActiveDTO updatePassword(UUID id, UserUpdateDTO userUpdateDTO) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
 
         if (optionalUserEntity.isEmpty()) {
             return null;
@@ -136,9 +139,11 @@ public class UserService {
             userRepository.save(updatedUserEntity);
 
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
+                .id(originalUserEntity.getId())
                 .nickname(userUpdateDTO.getNickname())
                 .loginState(1L)
                 .build();
+
             return userActiveDTO;
         } else {
             return null;

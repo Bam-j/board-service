@@ -7,6 +7,7 @@ import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.repository.UserRepository;
 import com.bam.board_service.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,18 +92,16 @@ public class UserController {
 
     @PostMapping("/user/updateNickname")
     public String updateNickname(UserUpdateDTO userUpdateDTO, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-
-        UserActiveDTO updatedUserDTO = userService.updateNickname(username, userUpdateDTO);
+        UUID id = (UUID) session.getAttribute("loginUserId");
+        userService.updateNickname(id, userUpdateDTO);
 
         return "redirect:/user/updateForm";
     }
 
     @PostMapping("/user/updatePassword")
     public String updatePassword(UserUpdateDTO userUpdateDTO, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-
-        UserActiveDTO updatedUserDTO = userService.updatePassword(username, userUpdateDTO);
+        UUID id = (UUID) session.getAttribute("loginUserId");
+        userService.updatePassword(id, userUpdateDTO);
 
         return "redirect:/user/updateForm";
     }

@@ -11,6 +11,7 @@ import com.bam.board_service.service.UserService;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +102,9 @@ class UserUpdateServiceTest {
         assertNull(userEntity);
     }
 
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
     @Test
-    @DisplayName("Userservice.updateNickname() 실패 테스트 - 이미 존재하는 nickname으로의 변경 시도")
+    @DisplayName("UserService.updateNickname() 실패 테스트 - 이미 존재하는 nickname으로의 변경 시도")
     void userServiceUpdateNicknameMethodFailureTest() {
         //given
         //기존 유저 정보 username: "test", nickname: "test", password: "1234"
@@ -112,14 +114,15 @@ class UserUpdateServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
+        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
 
         //then
-        assertNull(userActiveDTO);
+        //assertNull(userActiveDTO);
     }
 
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
     @Test
-    @DisplayName("Userservice.updateNickname() 성공 테스트")
+    @DisplayName("UserService.updateNickname() 성공 테스트")
     void userServiceUpdateNicknameMethodSuccessTest() {
         //given
         //기존 유저 정보 username: "test", nickname: "test", password: "1234"
@@ -129,18 +132,21 @@ class UserUpdateServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
+        //UserActiveDTO userActiveDTO = userService.updateNickname("test", userUpdateDTO);
 
         //then
+        /*
         assertAll(
             () -> assertThat(userActiveDTO).isNotNull(),
             () -> assertThat(userActiveDTO.getNickname()).isEqualTo("hello"),
             () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
         );
+         */
     }
 
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
     @Test
-    @DisplayName("Userservice.updatePassword() 실패 테스트 - 이전에 사용한 비밀번호와 동일한 비밀번호로 변경 시도")
+    @DisplayName("UserService.updatePassword() 실패 테스트 - 이전에 사용한 비밀번호와 동일한 비밀번호로 변경 시도")
     void userServiceUpdatePasswordMethodFailureTest() {
         //given
         //기존 유저 정보 username: "test", nickname: "test", password: "1234"
@@ -150,14 +156,15 @@ class UserUpdateServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
+        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
 
         //then
-        assertNull(userActiveDTO);
+        //assertNull(userActiveDTO);
     }
 
+    @Disabled("Entity 탐색 방식을 findByUsername -> findById로 변경")
     @Test
-    @DisplayName("Userservice.updatePassword() 성공 테스트")
+    @DisplayName("UserService.updatePassword() 성공 테스트")
     void userServiceUpdatePasswordMethodSuccessTest() {
         //given
         //기존 유저 정보 username: "test", nickname: "test", password: "1234"
@@ -167,15 +174,18 @@ class UserUpdateServiceTest {
             .build();
 
         //when
-        UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
+        //UserActiveDTO userActiveDTO = userService.updatePassword("test", userUpdateDTO);
 
         //then
+        /*
         assertAll(
             () -> assertThat(userActiveDTO).isNotNull(),
             () -> assertThat(userActiveDTO.getNickname()).isEqualTo("test"),
             () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("7777"),
             () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
         );
+
+         */
     }
 
     @Test
@@ -187,7 +197,7 @@ class UserUpdateServiceTest {
             .password("1234")
             .build();
         MockHttpSession session = new MockHttpSession();
-        UserActiveDTO userActiveDTO = userService.login(userLoginDTO, session);
+        userService.login(userLoginDTO, session);
 
         UUID id = (UUID) session.getAttribute("loginUserId");
 
@@ -211,5 +221,122 @@ class UserUpdateServiceTest {
         assertThat(updateResultUserEntity.getUsername()).isEqualTo("test");
         assertThat(updateResultUserEntity.getNickname()).isEqualTo("test");
         assertThat(updateResultUserEntity.getPassword()).isEqualTo("0000");
+    }
+
+    @Test
+    @DisplayName("변경된 방식의 UserService.updateNickname() 실패 테스트 - 동일한 Nickname으로의 변경 시도")
+    void changedUserServiceUpdateNicknameFailureTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+        MockHttpSession session = new MockHttpSession();
+        userService.login(userLoginDTO, session);
+
+        UUID id = (UUID) session.getAttribute("loginUserId");
+
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .id(id)
+            .nickname("test")
+            .password("1234")
+            .build();
+
+        //when
+        UserActiveDTO userActiveDTO = userService.updateNickname(id, userUpdateDTO);
+
+        //then
+        assertNull(userActiveDTO);
+    }
+
+    @Test
+    @DisplayName("변경된 방식의 UserService.updateNickname() 성공 테스트")
+    void changedUserServiceUpdateNicknameSuccessTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+        MockHttpSession session = new MockHttpSession();
+        userService.login(userLoginDTO, session);
+
+        UUID id = (UUID) session.getAttribute("loginUserId");
+
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .id(id)
+            .nickname("hello")
+            .password("0000")
+            .build();
+
+        //when
+        UserActiveDTO userActiveDTO = userService.updateNickname(id, userUpdateDTO);
+
+        //then
+        assertAll(
+            () -> assertThat(userActiveDTO).isNotNull(),
+            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("hello"),
+            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
+        );
+    }
+
+    @Test
+    @DisplayName("변경된 방식의 UserService.updatePassword() 실패 테스트 - 동일한 Password로의 변경 시도")
+    void changedUserServiceUpdatePasswordFailureTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+        MockHttpSession session = new MockHttpSession();
+        userService.login(userLoginDTO, session);
+
+        UUID id = (UUID) session.getAttribute("loginUserId");
+
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .id(id)
+            .nickname("test")
+            .password("1234")
+            .build();
+
+        //when
+        UserActiveDTO userActiveDTO = userService.updatePassword(id, userUpdateDTO);
+
+        //then
+        assertNull(userActiveDTO);
+    }
+
+    @Test
+    @DisplayName("변경된 방식의 UserService.updatePassword() 성공 테스트")
+    void changedUserServiceUpdateNicknamePasswordTest() {
+        //given
+        //기존 유저 정보 username: "test", nickname: "test", password: "1234"
+        UserLoginDTO userLoginDTO = UserLoginDTO.builder()
+            .username("test")
+            .password("1234")
+            .build();
+        MockHttpSession session = new MockHttpSession();
+        userService.login(userLoginDTO, session);
+
+        UUID id = (UUID) session.getAttribute("loginUserId");
+
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+            .id(id)
+            .nickname("test")
+            .password("0000")
+            .build();
+
+        //when
+        UserActiveDTO userActiveDTO = userService.updatePassword(id, userUpdateDTO);
+
+        //then
+        assertAll(
+            () -> assertThat(userActiveDTO).isNotNull(),
+            () -> assertThat(userActiveDTO.getNickname()).isEqualTo("test"),
+            () -> assertThat(userUpdateDTO.getPassword()).isEqualTo("0000"),
+            () -> assertThat(userActiveDTO.getLoginState()).isEqualTo(1L)
+        );
     }
 }
