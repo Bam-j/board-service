@@ -8,6 +8,7 @@ public class PostMapper {
 
     public PostListDTO toPostListDTO(PostEntity postEntity) {
         PostListDTO postListDTO = PostListDTO.builder()
+            .id(postEntity.getId())
             .writer(postEntity.getWriter())
             .title(postEntity.getTitle())
             .contents(postEntity.getContents())

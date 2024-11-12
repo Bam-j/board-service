@@ -48,7 +48,8 @@ public class PostEntity {
     private LocalDateTime updatedTime;
 
     @Builder
-    public PostEntity(String writer, String title, String contents, Long views) {
+    public PostEntity(UUID id, String writer, String title, String contents, Long views) {
+        this.id = id;
         this.writer = writer;
         this.title = title;
         this.contents = contents;
