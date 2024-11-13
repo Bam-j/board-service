@@ -15,6 +15,6 @@ public interface BoardRepository extends JpaRepository<PostEntity, UUID> {
     Optional<PostEntity> findByWriter(String writer);
 
     @Modifying
-    @Query(value = "UPDATE PostEntity postEntity SET postEntity.views=postEntity.views+1 WHERE postEntity.id=:id")
+    @Query(value = "UPDATE PostEntity SET views = views+1 WHERE id=:id")
     void increaseViews(@Param("id") UUID id);
 }

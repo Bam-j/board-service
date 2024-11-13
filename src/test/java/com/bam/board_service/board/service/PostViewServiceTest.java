@@ -1,6 +1,7 @@
 package com.bam.board_service.board.service;
 
 import com.bam.board_service.dto.board.PostWriteDTO;
+import com.bam.board_service.entity.PostEntity;
 import com.bam.board_service.repository.BoardRepository;
 import com.bam.board_service.service.BoardService;
 import java.util.UUID;
@@ -14,10 +15,11 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 class PostViewServiceTest {
 
+    @Autowired
     private BoardRepository boardRepository;
+    @Autowired
     private BoardService boardService;
 
     @Test
@@ -29,11 +31,14 @@ class PostViewServiceTest {
             .title("test")
             .contents("increase views test")
             .build();
-        boardService.save(postWriteDTO);
+        UUID id = boardService.save(postWriteDTO);
 
         //when
-        //boardService.increaseViews(id);
+        boardService.increaseViews(id);
 
         //then
+        PostEntity postEntity = boardRepository.findById(id).get();
+
+        assertThat(postEntity.getViews()).isEqualTo(1L);
     }
 }

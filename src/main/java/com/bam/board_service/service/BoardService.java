@@ -5,7 +5,7 @@ import com.bam.board_service.dto.board.PostWriteDTO;
 import com.bam.board_service.entity.PostEntity;
 import com.bam.board_service.mapper.PostMapper;
 import com.bam.board_service.repository.BoardRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,13 +18,15 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void save(PostWriteDTO postWriteDTO) {
+    public UUID save(PostWriteDTO postWriteDTO) {
         PostMapper postMapper = new PostMapper();
         PostEntity postEntity = postMapper.toPostEntity(postWriteDTO);
         boardRepository.save(postEntity);
+
+        return postEntity.getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostListDTO> findAllPosts() {
         List<PostEntity> postEntityList = boardRepository.findAll();
         List<PostListDTO> postListDTOList = new ArrayList<>();

@@ -29,6 +29,7 @@ class UserLoginServiceTest {
     @Autowired
     private UserService userService;
 
+    //TODO: loginState를 DB에 처리하는 코드 누락
     @Test
     @DisplayName("findByUsername에 성공했을 때 UserActiveDTO에 nickname, loginState가 제대로 반영되었는지 테스트")
     void UserLoginServiceSuccessTest() {
