@@ -21,3 +21,6 @@
 ### 세션
 - 데이터 전달 등에 세션을 잘 활용하자
 - 테스트는 MockHttpSession을 활용
+
+### IDE를 더 강력하게
+- Live Template, Database 등의 기능을 더욱 적극적으로 활용한다.
