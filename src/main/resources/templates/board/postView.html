@@ -12,8 +12,9 @@
 <!--  <span th:if="${user.loginState == 1}">-->
 <!--    <p th:text="${user.nickname}">닉네임 표시</p>-->
 <!--  </span>-->
-  <button id="loginButton" class="button">로그인</button>
-</header>
+  <form action="/user/login" method="get">
+    <input id="loginButton" class="button" type="submit">로그인</input>
+  </form></header>
 <section>
   <table>
     <thead>
