@@ -15,6 +15,6 @@ import lombok.Setter;
 @Builder
 public class PostEditDTO {
     private UUID id;
-    private String string;
+    private String title;
     private String contents;
 }
