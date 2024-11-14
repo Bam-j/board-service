@@ -1,6 +1,8 @@
 package com.bam.board_service.controller;
 
+import com.bam.board_service.dto.board.PostViewDTO;
 import com.bam.board_service.dto.board.PostWriteDTO;
+import com.bam.board_service.entity.PostEntity;
 import com.bam.board_service.repository.BoardRepository;
 import com.bam.board_service.service.BoardService;
 import java.util.UUID;
@@ -31,8 +33,10 @@ public class BoardController {
 
     @GetMapping("/post/view/{id}")
     public String postView(@PathVariable UUID id, Model model) {
-        model.addAttribute("post", boardRepository.findById(id));
         boardService.increaseViews(id);
+
+        PostViewDTO postViewDTO = boardService.findById(id);
+        model.addAttribute("post", postViewDTO);
 
         return "/board/postView";
     }

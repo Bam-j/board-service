@@ -1,10 +1,12 @@
 package com.bam.board_service.service;
 
 import com.bam.board_service.dto.board.PostListDTO;
+import com.bam.board_service.dto.board.PostViewDTO;
 import com.bam.board_service.dto.board.PostWriteDTO;
 import com.bam.board_service.entity.PostEntity;
 import com.bam.board_service.mapper.PostMapper;
 import com.bam.board_service.repository.BoardRepository;
+import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +44,25 @@ public class BoardService {
     @Transactional
     public void increaseViews(UUID id) {
         boardRepository.increaseViews(id);
+    }
+
+    @Transactional(readOnly = true)
+    public PostViewDTO findById(UUID id) {
+        Optional<PostEntity> optionalPostEntity = boardRepository.findById(id);
+
+        if (optionalPostEntity.isEmpty()) {
+            return null;
+        }
+
+        PostEntity postEntity = optionalPostEntity.get();
+        PostViewDTO postViewDTO = PostViewDTO.builder()
+            .id(id)
+            .writer(postEntity.getWriter())
+            .title(postEntity.getTitle())
+            .contents(postEntity.getContents())
+            .views(postEntity.getViews())
+            .build();
+
+        return postViewDTO;
     }
 }
