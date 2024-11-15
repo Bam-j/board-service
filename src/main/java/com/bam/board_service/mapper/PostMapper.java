@@ -1,5 +1,6 @@
 package com.bam.board_service.mapper;
 
+import com.bam.board_service.dto.board.PostEditDTO;
 import com.bam.board_service.dto.board.PostListDTO;
 import com.bam.board_service.dto.board.PostWriteDTO;
 import com.bam.board_service.entity.PostEntity;
@@ -28,6 +29,16 @@ public class PostMapper {
             .build();
 
         return postEntity;
+    }
 
+    public PostEntity toPostEntity(PostEntity originalPostEntity, PostEditDTO postEditDTO) {
+        PostEntity postEntity = PostEntity.builder()
+            .writer(originalPostEntity.getWriter())
+            .title(postEditDTO.getTitle())
+            .contents(postEditDTO.getContents())
+            .views(originalPostEntity.getViews())
+            .build();
+
+        return postEntity;
     }
 }
