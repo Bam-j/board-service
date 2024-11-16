@@ -1,5 +1,6 @@
 package com.bam.board_service.service;
 
+import com.bam.board_service.dto.board.PostEditDTO;
 import com.bam.board_service.dto.board.PostListDTO;
 import com.bam.board_service.dto.board.PostViewDTO;
 import com.bam.board_service.dto.board.PostWriteDTO;
@@ -64,5 +65,23 @@ public class BoardService {
             .build();
 
         return postViewDTO;
+    }
+
+    public Boolean edit(PostEditDTO postEditDTO) {
+        String title = postEditDTO.getTitle();
+
+        if (title == null || title.trim().isEmpty()) {
+            //제목이 없거나 빈 내용이면 수정 x
+            return false;
+        }
+
+        UUID postId = postEditDTO.getId();
+        PostEntity originalPostEntity = boardRepository.findById(postId).get();
+        PostMapper postMapper = new PostMapper();
+
+        PostEntity editedPostEntity = postMapper.toPostEntity(originalPostEntity, postEditDTO);
+        boardRepository.save(editedPostEntity);
+
+        return true;
     }
 }

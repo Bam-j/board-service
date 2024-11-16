@@ -33,6 +33,7 @@ public class PostMapper {
 
     public PostEntity toPostEntity(PostEntity originalPostEntity, PostEditDTO postEditDTO) {
         PostEntity postEntity = PostEntity.builder()
+            .id(originalPostEntity.getId())
             .writer(originalPostEntity.getWriter())
             .title(postEditDTO.getTitle())
             .contents(postEditDTO.getContents())

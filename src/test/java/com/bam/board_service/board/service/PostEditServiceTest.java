@@ -24,6 +24,7 @@ class PostEditServiceTest {
     @Autowired
     private BoardRepository boardRepository;
 
+    /*
     private UUID id;
 
     @BeforeEach
@@ -36,38 +37,56 @@ class PostEditServiceTest {
         id = boardService.save(postWriteDTO);
     }
 
+     */
+
     @Test
     @DisplayName("게시글 수정 요청 시 PostEntity에 updatedTime이 잘 생성됐는지 확인")
     void createUpdatedTimeInPostEntityTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
             .title("edited title")
             .contents("edited contents")
             .build();
         PostMapper postMapper = new PostMapper();
+        PostEntity originalPostEntity = boardRepository.findById(id).get();
 
         //when
-        boardRepository.save(postMapper.toPostEntity(postEditDTO));
+        boardRepository.save(postMapper.toPostEntity(originalPostEntity, postEditDTO));
 
         //then
-        PostEntity postEntity = boardRepository.findById(id).get();
+        PostEntity updatedPostEntity = boardRepository.findById(id).get();
 
-        assertNotNull(postEntity.getUpdatedTime());
-        assertNotEquals(postEntity.getCreatedTime(), postEntity.getUpdatedTime());
+        assertNotNull(updatedPostEntity.getUpdatedTime());
+        assertNotEquals(updatedPostEntity.getCreatedTime(), updatedPostEntity.getUpdatedTime());
     }
 
     @Test
     @DisplayName("게시글의 제목만 수정했을 때 반영 여부 테스트")
     void postTitleEditedServiceTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
             .title("edited title")
             .contents("test")
             .build();
         PostMapper postMapper = new PostMapper();
+        PostEntity originalPostEntity = boardRepository.findById(id).get();
 
         //when
-        boardRepository.save(postMapper.toPostEntity(postEditDTO));
+        boardRepository.save(postMapper.toPostEntity(originalPostEntity, postEditDTO));
 
         //then
         PostEntity postEntity = boardRepository.findById(id).get();
@@ -83,22 +102,30 @@ class PostEditServiceTest {
     @DisplayName("게시글의 내용만 수정했을 때 반영 여부 테스트")
     void postContentsEditedServiceTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
             .title("test")
             .contents("edited contents")
             .build();
         PostMapper postMapper = new PostMapper();
+        PostEntity originalPostEntity = boardRepository.findById(id).get();
 
         //when
-        boardRepository.save(postMapper.toPostEntity(postEditDTO));
+        boardRepository.save(postMapper.toPostEntity(originalPostEntity, postEditDTO));
 
         //then
-        PostEntity postEntity = boardRepository.findById(id).get();
+        PostEntity updatedPostEntity = boardRepository.findById(id).get();
 
         assertAll(
-            () -> assertEquals(postEntity.getTitle(), "edited title"),
-            () -> assertNotEquals(postEntity.getContents(), "test"),
-            () -> assertEquals(postEntity.getContents(), "edited contents")
+            () -> assertEquals(updatedPostEntity.getTitle(), "test"),
+            () -> assertNotEquals(updatedPostEntity.getContents(), "test"),
+            () -> assertEquals(updatedPostEntity.getContents(), "edited contents")
         );
     }
 
@@ -106,23 +133,31 @@ class PostEditServiceTest {
     @DisplayName("게시글의 제목, 내용을 전부 수정했을 때의 반영 여부 테스트")
     void postEditedServiceTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
             .title("edited title")
             .contents("edited contents")
             .build();
         PostMapper postMapper = new PostMapper();
+        PostEntity originalPostEntity = boardRepository.findById(id).get();
 
         //when
-        boardRepository.save(postMapper.toPostEntity(postEditDTO));
+        boardRepository.save(postMapper.toPostEntity(originalPostEntity, postEditDTO));
 
         //then
-        PostEntity postEntity = boardRepository.findById(id).get();
+        PostEntity updatedPostEntity = boardRepository.findById(id).get();
 
         assertAll(
-            () -> assertNotEquals(postEntity.getTitle(), "test"),
-            () -> assertEquals(postEntity.getTitle(), "edited title"),
-            () -> assertNotEquals(postEntity.getContents(), "test"),
-            () -> assertEquals(postEntity.getContents(), "edited contents")
+            () -> assertNotEquals(updatedPostEntity.getTitle(), "test"),
+            () -> assertEquals(updatedPostEntity.getTitle(), "edited title"),
+            () -> assertNotEquals(updatedPostEntity.getContents(), "test"),
+            () -> assertEquals(updatedPostEntity.getContents(), "edited contents")
         );
     }
 
@@ -130,14 +165,22 @@ class PostEditServiceTest {
     @DisplayName("BoardService.update() 실패 테스트 - 빈 제목으로의 수정")
     void boardServiceUpdateMethodFailureTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
+            .id(id)
             .title("")
             .contents("test")
             .build();
         PostMapper postMapper = new PostMapper();
 
         //when
-        Boolean updateResult = boardService.update(id);
+        Boolean updateResult = boardService.edit(postEditDTO);
 
         //then
         assertFalse(updateResult);
@@ -147,14 +190,22 @@ class PostEditServiceTest {
     @DisplayName("BoardService.update() 성공 테스트")
     void boardServiceUpdateMethodSuccessTest() {
         //given
+        PostWriteDTO postWriteDTO = PostWriteDTO.builder()
+            .writer("tester")
+            .title("test")
+            .contents("test")
+            .build();
+        UUID id = boardService.save(postWriteDTO);
+
         PostEditDTO postEditDTO = PostEditDTO.builder()
+            .id(id)
             .title("edited title")
             .contents("edited contents")
             .build();
         PostMapper postMapper = new PostMapper();
 
         //when
-        Boolean updateResult = boardService.update(id);
+        Boolean updateResult = boardService.edit(postEditDTO);
 
         //then
         assertTrue(updateResult);
