@@ -61,6 +61,7 @@ public class BoardController {
 
     @PostMapping("/post/edit")
     public String edit(@ModelAttribute PostEditDTO postEditDTO, Model model) {
+        //TODO: boardService.edit의 결과가 Boolean이 아닌 postViewDTO를 반환하도록 변경할 것
         Boolean editResult = boardService.edit(postEditDTO);
 
         if (editResult) {

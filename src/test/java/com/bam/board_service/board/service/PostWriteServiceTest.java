@@ -6,6 +6,7 @@ import com.bam.board_service.mapper.PostMapper;
 import com.bam.board_service.repository.BoardRepository;
 import com.bam.board_service.service.BoardService;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +57,10 @@ class PostWriteServiceTest {
             .build();
 
         //when
-        boardService.save(postWriteDTO);
+        UUID id = boardService.save(postWriteDTO);
 
         //then
-        //TODO: 지금은 post가 하나라서 findByWriter를 통해 찾았으나 실제 코드에선 id를 통해 조회
-        PostEntity postEntity = boardRepository.findByWriter("tester").get();
+        PostEntity postEntity = boardRepository.findById(id).get();
         assertThat(postEntity.getWriter()).isEqualTo("tester");
         assertThat(postEntity.getTitle()).isEqualTo("test");
         assertThat(postEntity.getContents()).isEqualTo("test");
