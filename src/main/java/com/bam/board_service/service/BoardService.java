@@ -84,4 +84,8 @@ public class BoardService {
 
         return true;
     }
+
+    public void delete(UUID id) {
+        boardRepository.deleteById(id);
+    }
 }

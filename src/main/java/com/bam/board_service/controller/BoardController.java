@@ -72,4 +72,11 @@ public class BoardController {
             return "redirect:/board/postEdit";
         }
     }
+
+    @PostMapping("/post/delete/{id}")
+    public String delete(@PathVariable UUID id) {
+        boardService.delete(id);
+
+        return "redirect:index";
+    }
 }
