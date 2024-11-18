@@ -4,6 +4,7 @@ import com.bam.board_service.dto.comment.CommentWriteDTO;
 import com.bam.board_service.entity.CommentEntity;
 import com.bam.board_service.mapper.CommentMapper;
 import com.bam.board_service.repository.CommentRepository;
+import com.bam.board_service.service.CommentService;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
