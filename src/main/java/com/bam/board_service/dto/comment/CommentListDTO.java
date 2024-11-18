@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class CommentViewDTO {
+public class CommentListDTO {
     private UUID id;
     private String writer;
     private String comment;
