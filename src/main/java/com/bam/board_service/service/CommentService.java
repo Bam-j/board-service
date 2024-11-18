@@ -45,4 +45,8 @@ public class CommentService {
 
         return commentListDTOList;
     }
+
+    public void delete(UUID id) {
+        commentRepository.deleteById(id);
+    }
 }
