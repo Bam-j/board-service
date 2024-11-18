@@ -36,6 +36,28 @@
   <button>목록</button>
   <button>수정</button>
   <button>삭제</button>
+
+  <div id="commentWriteForm">
+    <!-- TODO: ajax를 사용해서 요청 보내기 -->
+    <!-- TODO: 로그인 시 commentWriter엔 user.nickname이, 비로그인시에는 blank, readonly로 처리하기 -->
+    <input type="text" id="commentWriter" th:text="${user.nickname}" readonly>
+    <input type="text" id="commentContents" placeholder="내용">
+    <button id="commentWriteButton" onclick="commentWrite()">댓글 작성</button>
+  </div>
+  <div id="commentList">
+    <table>
+      <tr>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성시간</th>
+      </tr>
+      <tr th:each="comment: ${commentList}">
+        <td th:text="${comment.commentWriter}"></td>
+        <td th:text="${comment.commentContents}"></td>
+        <td th:text="${comment.commentCreatedTime}"></td>
+      </tr>
+    </table>
+  </div>
 </section>
 <script src=""></script>
 </body>
