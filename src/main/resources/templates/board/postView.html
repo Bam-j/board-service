@@ -42,7 +42,7 @@
     <!-- TODO: 로그인 시 commentWriter엔 user.nickname이, 비로그인시에는 blank, readonly로 처리하기 -->
     <input type="text" id="commentWriter" th:text="${user.nickname}" readonly>
     <input type="text" id="commentContents" placeholder="내용">
-    <button id="commentWriteButton" onclick="commentWrite()">댓글 작성</button>
+    <button id="commentWriteButton">댓글 작성</button>
   </div>
   <div id="commentList">
     <table>
@@ -55,10 +55,12 @@
         <td th:text="${comment.commentWriter}"></td>
         <td th:text="${comment.commentContents}"></td>
         <td th:text="${comment.commentCreatedTime}"></td>
+        <td><button id="commentDeleteButton">댓글 삭제</button></td>
       </tr>
     </table>
   </div>
 </section>
-<script src=""></script>
+<script src="/static/js/board/postViewCommentWrite.js"></script>
+<script src="/static/js/board/postViewCommentDelete.js"></script>
 </body>
 </html>
