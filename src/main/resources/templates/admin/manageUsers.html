@@ -26,6 +26,7 @@
       <td th:text="${user.id}"></td>
       <td th:text="${user.username}"></td>
       <td th:text="${user.nickname}"></td>
+      <td th:text="${user.createdTime}"></td>
       <td>
         <a th:href="@{|/user/delete/${user.id}|}">삭제</a>
       </td>

@@ -1,6 +1,7 @@
 package com.bam.board_service.mapper;
 
 import com.bam.board_service.dto.user.UserCreateDTO;
+import com.bam.board_service.dto.user.UserListDTO;
 import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import org.springframework.stereotype.Component;
@@ -54,5 +55,15 @@ public class UserMapper {
             .build();
 
         return userEntity;
+    }
+
+    public UserListDTO toUserListDTO(UserEntity userEntity) {
+        UserListDTO userListDTO = UserListDTO.builder()
+            .id(userEntity.getId())
+            .username(userEntity.getUsername())
+            .nickname(userEntity.getNickname())
+            .build();
+
+        return userListDTO;
     }
 }

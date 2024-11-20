@@ -2,17 +2,19 @@ package com.bam.board_service.service;
 
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
+import com.bam.board_service.dto.user.UserListDTO;
 import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.entity.UserEntity;
 import com.bam.board_service.mapper.UserMapper;
 import com.bam.board_service.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -155,5 +157,17 @@ public class UserService {
         userRepository.deleteById(id);
 
         return "redirect:/index";
+    }
+
+    public List<UserListDTO> findAllUsers() {
+        List<UserEntity> userEntityList = userRepository.findAll();
+        List<UserListDTO> userListDTOList = new ArrayList<>();
+        UserMapper userMapper = new UserMapper();
+
+        for (UserEntity userEntity : userEntityList) {
+            userListDTOList.add(userMapper.toUserListDTO(userEntity));
+        }
+
+        return userListDTOList;
     }
 }
