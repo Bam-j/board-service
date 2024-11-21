@@ -35,6 +35,8 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentListDTO> findAllComments() {
+        //TODO: 등록순으로 부여된 컬럼을 만들까? createdTime을 쓸까
+        //SELECT * FROM comments_table WHERE post_id=? ORDER BY createdTime DESC;
         List<CommentEntity> commentEntityList = commentRepository.findAll();
         List<CommentListDTO> commentListDTOList = new ArrayList<>();
         CommentMapper commentMapper = new CommentMapper();
