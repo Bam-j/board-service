@@ -112,4 +112,11 @@ public class UserController {
 
         return deleteResult;
     }
+
+    @GetMapping("/user/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+
+        return "index";
+    }
 }
