@@ -15,12 +15,12 @@
   <div th:if="${user != null}">
     <p th:text="${user.nickname}">닉네임 표시</p>
     <form action="/user/logout" method="get">
-      <button id="logoutButton" class="button" type="submit">로그아웃</button>
+      <button id="logoutButton" class="button" type="submit" value="로그아웃"></button>
     </form>
   </div>
   <div th:unless="${user != null}">
     <form action="/user/login" method="get">
-      <input id="loginButton" class="button" type="submit">로그인</input>
+      <input id="loginButton" class="button" type="submit" value="로그인"></input>
     </form>
   </div>
 </header>
