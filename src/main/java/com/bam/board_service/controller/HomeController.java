@@ -30,13 +30,7 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model) {
         List<PostListDTO> posts = boardService.findAllPosts();
-        //TODO: 현재 화면 뿌리기 용으로 더미 유저 사용중
-        UserActiveDTO userActiveDTO = UserActiveDTO.builder()
-            .id(UUID.randomUUID())
-            .nickname("dummy")
-            .loginState(1L)
-            .build();
-        model.addAttribute("user", userActiveDTO);
+
         model.addAttribute("posts", posts);
 
         return "index";

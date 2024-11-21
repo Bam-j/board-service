@@ -12,14 +12,17 @@
 </head>
 <body>
 <header>
-  <!--
-  <span th:if="${user.loginState == 1}">
+  <div th:if="${user != null}">
     <p th:text="${user.nickname}">닉네임 표시</p>
-  </span>
-  -->
-  <form action="/user/login" method="get">
-    <input id="loginButton" class="button" type="submit">로그인</input>
-  </form>
+    <form action="/user/logout" method="get">
+      <button id="logoutButton" class="button" type="submit">로그아웃</button>
+    </form>
+  </div>
+  <div th:unless="${user != null}">
+    <form action="/user/login" method="get">
+      <input id="loginButton" class="button" type="submit">로그인</input>
+    </form>
+  </div>
 </header>
 <section>
   <table>
