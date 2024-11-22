@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- TODO: title 내용을 post.title로 나오게 변경 -->
-  <title>게시글 상세 조회</title>
+  <title th:text="${post.title}"></title>
   <link rel="stylesheet" href="">
 </head>
 <body>
@@ -39,9 +38,15 @@
     </tr>
     </tbody>
   </table>
-  <button>목록</button>
-  <button>수정</button>
-  <button>삭제</button>
+  <form action="/" method="get">
+    <button id="movePostListButton" type="submit" value="목록"></button>
+  </form>
+  <form th:action="/post/edit/${post.id}" method="get">
+    <button id="postEditButton" type="submit" value="수정"></button>
+  </form>
+  <form th:action="/post/delete/${post.id}" method="post">
+    <button id="postDeleteButton" type="submit" value="삭제"></button>
+  </form>
 
   <div id="commentWriteForm">
     <!-- TODO: ajax를 사용해서 요청 보내기 -->
@@ -61,7 +66,9 @@
         <td th:text="${comment.commentWriter}"></td>
         <td th:text="${comment.commentContents}"></td>
         <td th:text="${comment.commentCreatedTime}"></td>
-        <td><button id="commentDeleteButton">댓글 삭제</button></td>
+        <td>
+          <button id="commentDeleteButton">댓글 삭제</button>
+        </td>
       </tr>
     </table>
   </div>
