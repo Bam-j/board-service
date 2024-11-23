@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,12 +74,14 @@ public class UserController {
      * @return index.html or loginForm.html
      */
     @PostMapping("/user/login")
-    public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session) {
+    public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session, Model model) {
         UserActiveDTO user = userService.login(userLoginDTO, session);
 
         if (user != null) {
+            System.out.printf("login success: %s\n", user);
             session.setAttribute("user", user);
-            return "redirect:/";
+            model.addAttribute("user", user);
+            return "/index";
         } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
             return "/user/loginForm";
