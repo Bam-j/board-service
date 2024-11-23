@@ -25,7 +25,7 @@ public class HomeController {
 
     /**
      * 메인 페이지인 index.html을 요청하는 메소드
-     * @return index.html을 GET 요청
+     * @return index.html
      */
     @GetMapping("/")
     public String index(Model model) {

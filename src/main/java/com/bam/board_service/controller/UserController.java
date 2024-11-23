@@ -74,11 +74,11 @@ public class UserController {
      */
     @PostMapping("/user/login")
     public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session) {
-        UserActiveDTO activeUser = userService.login(userLoginDTO, session);
+        UserActiveDTO user = userService.login(userLoginDTO, session);
 
-        if (activeUser != null) {
-            session.setAttribute("activeUser", activeUser);
-            return "redirect:index";
+        if (user != null) {
+            session.setAttribute("user", user);
+            return "redirect:/";
         } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
             return "/user/loginForm";
