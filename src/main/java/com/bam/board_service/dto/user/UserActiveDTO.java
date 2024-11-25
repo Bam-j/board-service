@@ -21,5 +21,6 @@ import lombok.Setter;
 public class UserActiveDTO {
     private UUID id;
     private String nickname;
+    private Long userType;
     private Long loginState;
 }

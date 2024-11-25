@@ -11,6 +11,11 @@
 <header>
   <div th:if="${user != null}">
     <p th:text="${user.nickname}">닉네임 표시</p>
+    <span th:if="${user.userType == 1}">
+      <form action="/admin/users" method="get">
+        <button id="moveManagePageButton" type="submit" value="관리자 페이지"></button>
+      </form>
+    </span>
     <form action="/user/logout" method="get">
       <button id="logoutButton" class="button" type="submit" value="로그아웃"></button>
     </form>

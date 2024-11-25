@@ -66,6 +66,7 @@ public class UserService {
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
                 .id(userEntity.getId())
                 .nickname(userEntity.getNickname())
+                .userType(userEntity.getUserType())
                 .loginState(1L)
                 .build();
 
@@ -106,6 +107,7 @@ public class UserService {
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
                 .id(originalUserEntity.getId())
                 .nickname(userUpdateDTO.getNickname())
+                .userType(originalUserEntity.getUserType())
                 .loginState(1L)
                 .build();
 
@@ -143,6 +145,7 @@ public class UserService {
             UserActiveDTO userActiveDTO = UserActiveDTO.builder()
                 .id(originalUserEntity.getId())
                 .nickname(userUpdateDTO.getNickname())
+                .userType(originalUserEntity.getUserType())
                 .loginState(1L)
                 .build();
 
