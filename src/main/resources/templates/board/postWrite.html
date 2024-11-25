@@ -27,10 +27,12 @@
   </div>
 </header>
 <section>
-  <form action="/post/write" method="post" name="postWrite">
-    <input type="text" name="postTitle" placeholder="제목"> <br>
-    <textarea name="postContents">여기에 내용을 입력해주세요.</textarea>
-    <input type="submit" value="작성">
+  <form action="/post/write" method="post">
+    <!-- TODO: post 요청이 /post/write가 아닌 /post/write?로 넘어가는 문제 발생 -->
+    <input type="text" name="writer" th:text="${user.nickname}" readonly>
+    <input type="text" name="title" placeholder="제목"> <br>
+    <textarea name="contents" placeholder="여기에 내용을 입력해주세요."></textarea>
+    <input type="submit" value="작성"></input>
   </form>
 </section>
 <script></script>

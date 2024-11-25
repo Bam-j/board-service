@@ -27,10 +27,10 @@ public class BoardController {
     }
 
     @PostMapping("/post/write")
-    public String write(PostWriteDTO postWriteDTO) {
+    public String write(@ModelAttribute PostWriteDTO postWriteDTO) {
         boardService.save(postWriteDTO);
 
-        return "redirect:/index";
+        return "/index";
     }
 
     @GetMapping("/post/view/{id}")
