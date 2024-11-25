@@ -28,7 +28,8 @@
 </header>
 <section>
   <form action="/post/edit" method="post" name="postEditForm">
-    <input type="text" name="postTitle" placeholder="제목" th:value="${post.title}"> <br>
+    <input type="text" name="writer" th:text="${user.nickname}" readonly> <br>
+    <input type="text" name="postTitle" placeholder="제목" th:value="${post.title}" readonly> <br>
     <textarea name="postContents" th:text="${post.contents}">여기에 내용을 입력해주세요.</textarea>
     <input type="submit" value="수정">
   </form>
