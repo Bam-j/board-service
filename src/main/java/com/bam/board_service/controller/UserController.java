@@ -1,12 +1,15 @@
 package com.bam.board_service.controller;
 
+import com.bam.board_service.dto.board.PostListDTO;
 import com.bam.board_service.dto.user.UserActiveDTO;
 import com.bam.board_service.dto.user.UserCreateDTO;
 import com.bam.board_service.dto.user.UserLoginDTO;
 import com.bam.board_service.dto.user.UserUpdateDTO;
 import com.bam.board_service.repository.UserRepository;
+import com.bam.board_service.service.BoardService;
 import com.bam.board_service.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final BoardService boardService;
 
     //TODO: 각 요청 컨트롤러에 타임리프 템플릿으로 데이터를 전달하는 코드 작성하기
     /**
@@ -79,6 +83,11 @@ public class UserController {
 
         if (user != null) {
             session.setAttribute("user", user);
+
+            List<PostListDTO> posts = boardService.findAllPosts();
+
+            model.addAttribute("posts", posts);
+
             return "/index";
         } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
