@@ -74,13 +74,11 @@ public class UserController {
      * @return index.html or loginForm.html
      */
     @PostMapping("/user/login")
-    public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session, Model model) {
+    public String login(UserLoginDTO userLoginDTO, HttpSession session, Model model) {
         UserActiveDTO user = userService.login(userLoginDTO, session);
 
         if (user != null) {
-            System.out.printf("login success: %s\n", user);
             session.setAttribute("user", user);
-            model.addAttribute("user", user);
             return "/index";
         } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
