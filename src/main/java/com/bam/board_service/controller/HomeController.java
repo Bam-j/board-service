@@ -25,6 +25,10 @@ public class HomeController {
 
     /**
      * 메인 페이지인 index.html을 요청하는 메소드
+     * <p>
+     *     메인 페이지에서 게시글 전체 목록을 조회하고 반환하여
+     *     사용자에게 보여준다.
+     * </p>
      * @return index.html
      */
     @GetMapping("/")

@@ -9,6 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 게시글 목록 조회에 필요한 정보를 갖는 DTO
+ * @author bam
+ * @version 1.0
+ */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

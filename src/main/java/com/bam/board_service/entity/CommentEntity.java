@@ -18,6 +18,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+/**
+ * 게시글의 댓글 정보들을 담은 DB의 comments_table에 접근하기 위한 엔티티 클래스
+ * <p>
+ *     댓글 테이블은 게시글 테이블의 자식 연관 관계를 갖는다.
+ * </p>
+ * @author bam
+ * @version 1.0
+ */
 @Entity
 @Getter
 @Setter

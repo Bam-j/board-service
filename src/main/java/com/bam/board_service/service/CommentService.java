@@ -13,12 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Comment 요청과 관련된 로직을 수행하는 서비스 클래스
+ * @author bam
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    @Autowired
-    private CommentRepository commentRepository;
 
+    private final CommentRepository commentRepository;
+
+    /**
+     * 작성된 댓글을 저장하는 메소드
+     * @param commentWriteDTO
+     * @return UUID
+     */
     public UUID save(CommentWriteDTO commentWriteDTO) {
         CommentMapper commentMapper = new CommentMapper();
 
@@ -33,6 +43,10 @@ public class CommentService {
         return commentEntity.getId();
     }
 
+    /**
+     * 댓글 전체 목록을 조회하는 메소드
+     * @return List<CommentListDTO>
+     */
     @Transactional(readOnly = true)
     public List<CommentListDTO> findAllComments() {
         //TODO: 등록순으로 부여된 컬럼을 만들까? createdTime을 쓸까
@@ -48,6 +62,10 @@ public class CommentService {
         return commentListDTOList;
     }
 
+    /**
+     * 댓글 삭제를 처리하는 메소드
+     * @param id
+     */
     public void delete(UUID id) {
         commentRepository.deleteById(id);
     }

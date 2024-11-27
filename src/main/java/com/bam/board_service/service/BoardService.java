@@ -15,12 +15,22 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Posts 요청과 관련된 로직을 수행하는 서비스 클래스
+ * @author bam
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    /**
+     * 게시글 저장을 처리하는 메소드
+     * @param postWriteDTO
+     * @return UUID
+     */
     public UUID save(PostWriteDTO postWriteDTO) {
         PostMapper postMapper = new PostMapper();
         PostEntity postEntity = postMapper.toPostEntity(postWriteDTO);
@@ -29,6 +39,10 @@ public class BoardService {
         return postEntity.getId();
     }
 
+    /**
+     * 게시글 전체 목록을 조회하는 메소드
+     * @return List<PostListDTO>
+     */
     @Transactional(readOnly = true)
     public List<PostListDTO> findAllPosts() {
         List<PostEntity> postEntityList = boardRepository.findAll();
@@ -42,11 +56,20 @@ public class BoardService {
         return postListDTOList;
     }
 
+    /**
+     * 게시글 조회시 해당 게시글의 조회수를 1 증가시키는 메소드
+     * @param id
+     */
     @Transactional
     public void increaseViews(UUID id) {
         boardRepository.increaseViews(id);
     }
 
+    /**
+     * 게시글 상세 조회를 처리하는 메소드
+     * @param id
+     * @return PostViewDTO
+     */
     @Transactional(readOnly = true)
     public PostViewDTO findById(UUID id) {
         Optional<PostEntity> optionalPostEntity = boardRepository.findById(id);
@@ -67,6 +90,11 @@ public class BoardService {
         return postViewDTO;
     }
 
+    /**
+     * 게시글 수정을 처리하는 메소드
+     * @param postEditDTO
+     * @return Boolean
+     */
     public Boolean edit(PostEditDTO postEditDTO) {
         String title = postEditDTO.getTitle();
 
@@ -85,6 +113,10 @@ public class BoardService {
         return true;
     }
 
+    /**
+     * 게시글 삭제를 처리하는 메소드
+     * @param id
+     */
     public void delete(UUID id) {
         boardRepository.deleteById(id);
     }

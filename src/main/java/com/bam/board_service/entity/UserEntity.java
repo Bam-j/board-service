@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 /**
  * 유저 정보들을 담은 DB의 users_table에 접근하기 위한 엔티티 클래스
- *
  * @author bam
  * @version 1.0
  */

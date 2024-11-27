@@ -9,9 +9,6 @@ import lombok.Setter;
 
 /**
  * 로그인시 폼에 입력한 유저 정보를 전달하는 DTO
- * <p>
- *     username, password 두 가지 정보만 가짐
- * </p>
  * @author bam
  * @version 1.0
  */

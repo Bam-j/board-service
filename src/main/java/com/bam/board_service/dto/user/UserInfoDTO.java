@@ -12,7 +12,9 @@ import lombok.Setter;
  * 관리자 페이지에서 회원 정보 조회시 회원의 정보를 전달하는 DTO
  * @author bam
  * @version 1.0
+ * @deprecated password를 노출할 필요가 없으므로 사용하지 않음. UserListDTO로 대체.
  */
+@Deprecated
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

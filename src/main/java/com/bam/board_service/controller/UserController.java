@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
- * 회원(user)에 관련된 요청들을 처리하는 컨트롤러
+ * 회원에 관련된 요청들을 처리하는 컨트롤러
  *
  * @author bam
  * @version 1.0
  */
 @Controller
-//@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -34,11 +33,9 @@ public class UserController {
     private final UserService userService;
     private final BoardService boardService;
 
-    //TODO: 각 요청 컨트롤러에 타임리프 템플릿으로 데이터를 전달하는 코드 작성하기
     /**
      * 회원가입 폼을 요청하는 메소드
-     *
-     * @return joinForm.html을 반환
+     * @return joinForm.html
      */
     @GetMapping("/user/join")
     public String joinForm() {
@@ -46,8 +43,7 @@ public class UserController {
     }
 
     /**
-     * joinForm에서 POST 요청이 발생하면 폼 입력 데이터 userDTO로 받아 DB에 저장 후 홈으로 이동
-     *
+     * joinForm으로부터 입력 데이터를 받아 User를 DB에 저장한 후 index로 이동*
      * @param userCreateDTO
      * @return index.html
      */
@@ -60,7 +56,6 @@ public class UserController {
 
     /**
      * 로그인 폼을 요청하는 메소드
-     *
      * @return loginForm.html
      */
     @GetMapping("/user/login")
@@ -69,11 +64,11 @@ public class UserController {
     }
 
     /**
-     * loginForm에서 POST 요청이 발생하면 폼 입력 데이터를 받아와 로그인 작업을 수행하는 메소드
+     * loginForm으로부터 입력 데이터를 받아와 로그인 처리를 요청하는 메소드
      * <p>
-     * 로그인에 성공하면 index로 리다이렉트하고, 로그인에 실패하면 로그인 폼의 데이터를 지운다. (refresh)
+     *     로그인에 성공하면 세션에 로그인 유저 정보를 저장한 뒤 index로 이동하고, <br>
+     *     로그인에 실패하면 로그인 폼의 데이터를 지운다.
      * </p>
-     *
      * @param userLoginDTO
      * @return index.html or loginForm.html
      */
@@ -95,11 +90,21 @@ public class UserController {
         }
     }
 
+    /**
+     * 사용자 정보 수정 폼을 요청하는 메소드
+     * @return updateForm.html
+     */
     @GetMapping("/user/update")
     public String updateForm() {
         return "/user/updateForm";
     }
 
+    /**
+     * 사용자 nickname 변경 요청을 처리하는 메소드
+     * @param userUpdateDTO
+     * @param session
+     * @return updateForm.html
+     */
     @PostMapping("/user/updateNickname")
     public String updateNickname(UserUpdateDTO userUpdateDTO, HttpSession session) {
         UUID id = (UUID) session.getAttribute("loginUserId");
@@ -108,6 +113,12 @@ public class UserController {
         return "redirect:/user/updateForm";
     }
 
+    /**
+     * 사용자 password 변경 요청을 처리하는 메소드
+     * @param userUpdateDTO
+     * @param session
+     * @return updateForm.html
+     */
     @PostMapping("/user/updatePassword")
     public String updatePassword(UserUpdateDTO userUpdateDTO, HttpSession session) {
         UUID id = (UUID) session.getAttribute("loginUserId");
@@ -116,6 +127,11 @@ public class UserController {
         return "redirect:/user/updateForm";
     }
 
+    /**
+     * 사용자 삭제 요청을 처리하는 메소드
+     * @param id
+     * @return String deleteResult
+     */
     @PostMapping("/user/delete/{id}")
     public String delete(@PathVariable UUID id) {
         String deleteResult = userService.delete(id);
@@ -123,6 +139,11 @@ public class UserController {
         return deleteResult;
     }
 
+    /**
+     * 로그아웃 요청을 처리하는 메소드
+     * @param session
+     * @return index.html
+     */
     @GetMapping("/user/logout")
     public String logout(HttpSession session) {
         session.invalidate();

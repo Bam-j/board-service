@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * User 요청과 관련된 로직을 수행하는 서비스 클래스
+ * @author bam
+ * @version 1.0
  */
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     /**
-     * DB에 유저 정보를 저장
+     * DB에 유저 정보를 저장하는 메소드
      * <p>
      * View에서 DTO로 정보를 받아 Entity로 변환 후 JPA의 save()를 호출해서 유저 정보를 DB에 저장한다.
      * </p>
@@ -80,7 +82,7 @@ public class UserService {
     }
 
     /**
-     * 사용자 nickname 변경 요청이 들어오면 처리하는 메소드
+     * 사용자 nickname 변경을 처리하는 메소드
      * <p>
      * DB에 이미 존재하거나, 기존 nickname과 동일한 변경을 요청하는 경우 null 반환 변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
      * </p>
@@ -118,7 +120,7 @@ public class UserService {
     }
 
     /**
-     * 사용자 password 변경 요청이 들어오면 처리하는 메소드
+     * 사용자 password 변경을 처리하는 메소드
      * <p>
      * 기존 password와 동일한 변경을 요청하는 경우 null 반환 변경에 성공한 경우 변경된 정보가 담긴 UserActiveDTO 반환
      * </p>
@@ -155,6 +157,11 @@ public class UserService {
         }
     }
 
+    /**
+     * 사용자 계정 삭제를 처리하는 메소드
+     * @param id
+     * @return index.html
+     */
     public String delete(UUID id) {
         //TODO: id 검증 작업
         userRepository.deleteById(id);
@@ -162,6 +169,10 @@ public class UserService {
         return "redirect:/index";
     }
 
+    /**
+     * 사용자 전체 목록 조회를 처리하는 메소드
+     * @return List<UserListDTO>
+     */
     public List<UserListDTO> findAllUsers() {
         List<UserEntity> userEntityList = userRepository.findAll();
         List<UserListDTO> userListDTOList = new ArrayList<>();

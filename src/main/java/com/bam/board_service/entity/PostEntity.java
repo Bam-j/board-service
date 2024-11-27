@@ -21,6 +21,14 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+/**
+ * 게시글 정보들을 담은 DB의 board_table에 접근하기 위한 엔티티 클래스
+ * <p>
+ *     게시글 테이블은 댓글 테이블의 부모 연관 관계를 갖는다.
+ * </p>
+ * @author bam
+ * @version 1.0
+ */
 @Entity
 @Getter
 @Setter
