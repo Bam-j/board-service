@@ -43,7 +43,7 @@ public class UserController {
     }
 
     /**
-     * joinForm으로부터 입력 데이터를 받아 User를 DB에 저장한 후 index로 이동*
+     * joinForm으로부터 입력 데이터를 받아 User를 DB에 저장한 후 index로 이동
      * @param userCreateDTO
      * @return index.html
      */
@@ -51,7 +51,7 @@ public class UserController {
     public String join(@ModelAttribute UserCreateDTO userCreateDTO) {
         userService.save(userCreateDTO);
 
-        return "index";
+        return "/index";
     }
 
     /**
@@ -77,7 +77,9 @@ public class UserController {
         UserActiveDTO user = userService.login(userLoginDTO, session);
 
         if (user != null) {
-            session.setAttribute("user", user);
+            //session.setAttribute("user", user);
+            model.addAttribute("user", user);
+            System.out.println(user);
 
             List<PostListDTO> posts = boardService.findAllPosts();
 
