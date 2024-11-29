@@ -32,6 +32,6 @@ public interface BoardRepository extends JpaRepository<PostEntity, UUID> {
      * @param id 게시글 조회시 전달되는 해당 게시글의 id
      */
     @Modifying
-    @Query(value = "UPDATE PostEntity SET views = views+1 WHERE id=:id")
+    @Query(value = "UPDATE PostEntity SET views=views+1 WHERE id=:id")
     void increaseViews(@Param("id") UUID id);
 }

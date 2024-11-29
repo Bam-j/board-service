@@ -39,7 +39,7 @@ public class UserController {
      */
     @GetMapping("/user/join")
     public String joinForm() {
-        return "/user/joinForm";
+        return "user/joinForm";
     }
 
     /**
@@ -51,7 +51,7 @@ public class UserController {
     public String join(@ModelAttribute UserCreateDTO userCreateDTO) {
         userService.save(userCreateDTO);
 
-        return "/index";
+        return "index";
     }
 
     /**
@@ -60,7 +60,7 @@ public class UserController {
      */
     @GetMapping("/user/login")
     public String loginForm() {
-        return "/user/loginForm";
+        return "user/loginForm";
     }
 
     /**
@@ -84,10 +84,10 @@ public class UserController {
 
             model.addAttribute("posts", posts);
 
-            return "/index";
+            return "index";
         } else {
             //TODO: 로그인 실패시 loginForm을 띄우면서 안내메세지 출력하도록 만들기
-            return "/user/loginForm";
+            return "user/loginForm";
         }
     }
 
@@ -97,7 +97,7 @@ public class UserController {
      */
     @GetMapping("/user/update")
     public String updateForm() {
-        return "/user/updateForm";
+        return "user/updateForm";
     }
 
     /**
@@ -153,6 +153,6 @@ public class UserController {
 
         model.addAttribute("posts", posts);
 
-        return "/index";
+        return "index";
     }
 }
