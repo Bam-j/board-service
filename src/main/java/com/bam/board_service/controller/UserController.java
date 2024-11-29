@@ -79,7 +79,6 @@ public class UserController {
         if (user != null) {
             //session.setAttribute("user", user);
             model.addAttribute("user", user);
-            System.out.println(user);
 
             List<PostListDTO> posts = boardService.findAllPosts();
 
@@ -147,9 +146,13 @@ public class UserController {
      * @return index.html
      */
     @GetMapping("/user/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, Model model) {
         session.invalidate();
 
-        return "index";
+        List<PostListDTO> posts = boardService.findAllPosts();
+
+        model.addAttribute("posts", posts);
+
+        return "/index";
     }
 }
