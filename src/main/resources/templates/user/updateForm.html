@@ -27,6 +27,10 @@
 </header>
 <nav>
   <a href="/user/posts">작성글 목록</a>
+  <!-- TODO: 사용자 작성글 컨트롤러 연결 누락-->
+  <form action="/user/posts" method="get">
+    <button type="submit" value="작성글 목록">작성글 목록</button>
+  </form>
 </nav>
 <section>
   <h3>회원정보 수정</h3>
@@ -41,7 +45,7 @@
     <input type="text" name="password">
     <button type="submit">변경</button>
   </form>
-  <form th:action="${/user/delete/user.username}" method="post">
+  <form th:action="@{/user/delete/user.username}" method="post">
     <button type="submit">탈퇴</button>
   </form>
 </section>

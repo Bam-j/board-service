@@ -77,7 +77,7 @@ public class UserController {
         UserActiveDTO user = userService.login(userLoginDTO, session);
 
         if (user != null) {
-            //session.setAttribute("user", user);
+            session.setAttribute("user", user);
             model.addAttribute("user", user);
 
             List<PostListDTO> posts = boardService.findAllPosts();
@@ -96,7 +96,10 @@ public class UserController {
      * @return updateForm.html
      */
     @GetMapping("/user/update")
-    public String updateForm() {
+    public String updateForm(HttpSession session, Model model) {
+        UserActiveDTO user = (UserActiveDTO) session.getAttribute("user");
+        model.addAttribute("user", user);
+
         return "user/updateForm";
     }
 
